@@ -42,8 +42,7 @@ Basta abrir o arquivo diretamente no navegador — nenhuma instalação necessá
 open portfolio_gabriella.html
 ```
 
-Ou arraste o arquivo para qualquer navegador moderno (Chrome, Safari, Firefox, Edge).
-
+Ou clique no link: https://gabriella-portfolio-h1pn.vercel.app
 > **Requisito:** conexão com internet para carregar as fontes do Google Fonts.
 
 ---

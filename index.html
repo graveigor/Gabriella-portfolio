@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gabriella Torresani — Biomedicina</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:       #0d4f4a;
+      --teal-mid:   #156860;
+      --teal-light: #2a9d8f;
+      --cream:      #f5f0e8;
+      --cream-dark: #ede6d5;
+      --sand:       #c9b89a;
+      --text:       #1a1a1a;
+      --text-muted: #5a5a52;
+      --white:      #fefcf8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .5;
+    }
+
+    /* ─── NAV ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(245,240,232,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(13,79,74,.1);
+      animation: fadeDown .8s ease both;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: var(--teal);
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    /* ─── HERO ──────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      background: var(--teal);
+      display: flex;
+      align-items: flex-end;
+      padding: 8rem 4rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Cell/molecule background decoration */
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(42,157,143,.35) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(21,104,96,.4) 0%, transparent 45%);
+    }
+
+    /* Decorative circles mimicking microscope view */
+    .bio-circle {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.08);
+      pointer-events: none;
+    }
+    .bio-circle:nth-child(1) { width: 420px; height: 420px; top: -80px; right: -120px; }
+    .bio-circle:nth-child(2) { width: 260px; height: 260px; bottom: 60px; right: 40px; border-color: rgba(255,255,255,.12); }
+    .bio-circle:nth-child(3) { width: 140px; height: 140px; top: 40%; left: 30px; border-color: rgba(255,255,255,.07); }
+
+    .hero-left-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeUp .9s .3s ease both;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: .68rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--sand);
+      border: 1px solid rgba(201,184,154,.35);
+      padding: .35rem .9rem;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: .6rem;
+    }
+    .hero-name em {
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(245,240,232,.7);
+      display: block;
+    }
+    .hero-subtitle {
+      font-size: .85rem;
+      font-weight: 300;
+      letter-spacing: .06em;
+      color: rgba(245,240,232,.6);
+      margin-top: 1.5rem;
+      line-height: 1.7;
+      max-width: 320px;
+    }
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .7rem;
+      padding: .9rem 2rem;
+      background: transparent;
+      border: 1px solid rgba(201,184,154,.45);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .78rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background .3s, border-color .3s;
+    }
+    .hero-cta:hover {
+      background: rgba(201,184,154,.12);
+      border-color: var(--sand);
+    }
+    .hero-cta svg { transition: transform .3s; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    .hero-right {
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 4rem 5rem;
+      position: relative;
+      animation: fadeUp .9s .5s ease both;
+    }
+
+    .avatar-frame {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal-mid), var(--teal-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 300;
+      color: var(--cream);
+      box-shadow: 0 20px 60px rgba(13,79,74,.25), 0 0 0 8px var(--cream), 0 0 0 9px rgba(13,79,74,.12);
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .avatar-frame::after {
+      content: '';
+      position: absolute;
+      inset: -16px;
+      border-radius: 50%;
+      border: 1px dashed rgba(13,79,74,.2);
+      animation: spin 20s linear infinite;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(13,79,74,.12);
+      width: 100%;
+      max-width: 340px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: .5rem;
+    }
+    .stat-box {
+      background: var(--cream);
+      padding: 1.4rem 1.2rem;
+      text-align: center;
+    }
+    .stat-box:hover { background: var(--cream-dark); }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--teal);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .68rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: .4rem;
+    }
+
+    /* ─── SECTION SHARED ────────────────────────────── */
+    section { padding: 7rem 0; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    .section-eyebrow {
+      font-size: .68rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      white-space: nowrap;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--teal);
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(13,79,74,.2), transparent);
+    }
+
+    /* ─── ABOUT ─────────────────────────────────────── */
+    #sobre { background: var(--white); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 1.4rem;
+    }
+    .about-text p strong {
+      color: var(--teal);
+      font-weight: 500;
+    }
+    .about-highlight {
+      border-left: 3px solid var(--teal-light);
+      padding-left: 1.5rem;
+      margin-top: 2.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--teal);
+    }
+
+    .about-interests {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .interest-tag-title {
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: .8rem;
+    }
+    .interest-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .65rem 1.2rem;
+      background: var(--cream);
+      border: 1px solid var(--cream-dark);
+      border-radius: 2px;
+      font-size: .85rem;
+      color: var(--text-muted);
+      transition: all .25s;
+      cursor: default;
+    }
+    .interest-pill:hover {
+      border-color: var(--teal-light);
+      color: var(--teal);
+      background: rgba(42,157,143,.06);
+      transform: translateX(4px);
+    }
+    .interest-pill .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--teal-light);
+      flex-shrink: 0;
+    }
+    .pills-wrap { display: flex; flex-wrap: wrap; gap: .6rem; }
+
+    /* Contact mini */
+    .contact-mini {
+      margin-top: 2.5rem;
+      padding: 1.8rem;
+      background: var(--teal);
+      border-radius: 4px;
+    }
+    .contact-mini-title {
+      font-size: .68rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--sand);
+      margin-bottom: 1.2rem;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      color: rgba(245,240,232,.75);
+      font-size: .85rem;
+      margin-bottom: .7rem;
+    }
+    .contact-item svg { flex-shrink: 0; color: var(--teal-light); }
+
+    /* ─── EXPERIENCE ────────────────────────────────── */
+    #experiencia { background: var(--cream); }
+
+    .exp-card {
+      background: var(--white);
+      border: 1px solid rgba(13,79,74,.1);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .exp-card:hover {
+      box-shadow: 0 12px 40px rgba(13,79,74,.1);
+      transform: translateY(-3px);
+    }
+    .exp-card-header {
+      background: var(--teal);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .exp-company {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--cream);
+    }
+    .exp-role {
+      font-size: .78rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--sand);
+      margin-top: .4rem;
+    }
+    .exp-badge {
+      background: rgba(201,184,154,.18);
+      border: 1px solid rgba(201,184,154,.3);
+      color: var(--sand);
+      padding: .4rem 1rem;
+      border-radius: 2px;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .exp-card-body { padding: 2.5rem; }
+    .exp-intro {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 640px;
+    }
+
+    .exp-activities {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(13,79,74,.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .activity-item {
+      background: var(--white);
+      padding: 1.5rem 1.4rem;
+      transition: background .25s;
+    }
+    .activity-item:hover { background: rgba(42,157,143,.05); }
+    .activity-icon {
+      width: 36px; height: 36px;
+      background: rgba(13,79,74,.07);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: var(--teal);
+    }
+    .activity-title {
+      font-size: .78rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--teal);
+      margin-bottom: .6rem;
+    }
+    .activity-desc {
+      font-size: .82rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    /* ─── EDUCATION ─────────────────────────────────── */
+    #formacao { background: var(--white); }
+
+    .edu-card {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0;
+      border: 1px solid rgba(13,79,74,.1);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: box-shadow .3s;
+    }
+    .edu-card:hover { box-shadow: 0 8px 30px rgba(13,79,74,.08); }
+    .edu-year-col {
+      background: var(--teal);
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .edu-year-label {
+      font-size: .65rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--sand);
+    }
+    .edu-year-range {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-top: .4rem;
+    }
+    .edu-year-end {
+      font-size: 1.2rem;
+      color: rgba(245,240,232,.45);
+    }
+    .edu-status {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+    }
+    .edu-status::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--teal-light);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .edu-content {
+      padding: 3rem 2.5rem;
+      background: var(--white);
+    }
+    .edu-institution {
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: .8rem;
+    }
+    .edu-degree {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--teal);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .edu-tags { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .edu-tag {
+      padding: .35rem .9rem;
+      background: var(--cream);
+      border: 1px solid var(--cream-dark);
+      border-radius: 2px;
+      font-size: .75rem;
+      color: var(--text-muted);
+      letter-spacing: .04em;
+    }
+
+    /* ─── SKILLS ────────────────────────────────────── */
+    #competencias { background: var(--cream); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(13,79,74,.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .skill-card {
+      background: var(--white);
+      padding: 2.2rem 1.8rem;
+      transition: background .25s, transform .25s;
+      cursor: default;
+      position: relative;
+    }
+    .skill-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--teal-light);
+      transition: width .35s ease;
+    }
+    .skill-card:hover {
+      background: rgba(42,157,143,.05);
+    }
+    .skill-card:hover::after { width: 100%; }
+    .skill-icon {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+    .skill-name {
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--teal);
+      margin-bottom: .4rem;
+    }
+    .skill-desc {
+      font-size: .75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .lang-section {
+      margin-top: 3rem;
+      padding: 2rem 2.5rem;
+      background: var(--teal);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .lang-label {
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--sand);
+      margin-bottom: .5rem;
+    }
+    .lang-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--cream);
+    }
+    .lang-bar-wrap { flex: 0 0 300px; }
+    .lang-bar {
+      height: 4px;
+      background: rgba(255,255,255,.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: .8rem;
+    }
+    .lang-bar-fill {
+      height: 100%;
+      background: var(--teal-light);
+      width: 35%;
+      border-radius: 2px;
+      animation: growBar 1.2s 1s ease both;
+    }
+    .lang-level {
+      font-size: .72rem;
+      color: rgba(245,240,232,.5);
+      margin-top: .5rem;
+      letter-spacing: .08em;
+    }
+
+    /* ─── CONTACT / FOOTER ──────────────────────────── */
+    #contato {
+      background: var(--teal);
+      padding: 6rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    #contato::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 50%, rgba(42,157,143,.3) 0%, transparent 50%),
+        radial-gradient(circle at 90% 20%, rgba(21,104,96,.5) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .contact-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .contact-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+    }
+    .contact-heading em {
+      font-style: italic;
+      color: var(--sand);
+    }
+    .contact-sub {
+      font-size: .9rem;
+      color: rgba(245,240,232,.55);
+      line-height: 1.7;
+      margin-top: 1.5rem;
+      max-width: 360px;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 1px; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.4rem 1.8rem;
+      background: rgba(255,255,255,.05);
+      text-decoration: none;
+      color: rgba(245,240,232,.75);
+      font-size: .9rem;
+      transition: background .25s, color .25s;
+      border-radius: 2px;
+      margin-bottom: 1px;
+    }
+    .contact-link:hover {
+      background: rgba(255,255,255,.1);
+      color: var(--cream);
+    }
+    .contact-link svg { color: var(--teal-light); flex-shrink: 0; }
+
+    footer {
+      background: #081f1d;
+      text-align: center;
+      padding: 1.8rem;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,.25);
+    }
+
+    /* ─── SCROLL REVEALS ────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .75s ease, transform .75s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+
+    /* ─── KEYFRAMES ─────────────────────────────────── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .5; transform: scale(.8); }
+    }
+    @keyframes growBar {
+      from { width: 0; }
+      to   { width: 35%; }
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 7rem 2rem 3rem; min-height: 60vh; }
+      .hero-right { padding: 3rem 2rem 4rem; }
+      .container { padding: 0 2rem; }
+      .about-grid,
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .exp-activities { grid-template-columns: 1fr; }
+      .edu-card { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .lang-section { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+      .lang-bar-wrap { width: 100%; flex: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">G. Torresani</span>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#experiencia">Experiência</a></li>
+      <li><a href="#formacao">Formação</a></li>
+      <li><a href="#competencias">Competências</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="bio-circle"></div>
+      <div class="bio-circle"></div>
+      <div class="bio-circle"></div>
+      <div class="hero-left-content">
+        <span class="hero-tag">Biomedicina · Ciência · Saúde</span>
+        <h1 class="hero-name">
+          Gabriella<br/>
+          <em>Torresani</em>
+        </h1>
+        <p class="hero-subtitle">
+          Estudante de Biomedicina apaixonada por ciência e pesquisa — construindo uma base sólida em rotina laboratorial, epidemiologia e estética clínica.
+        </p>
+        <a href="#sobre" class="hero-cta">
+          Explorar portfólio
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="avatar-frame">GT</div>
+      <div class="hero-stats">
+        <div class="stat-box">
+          <div class="stat-number">2025</div>
+          <div class="stat-label">Início Graduação</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Exp. Laboratorial</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number"></div>
+          <div class="stat-label"></div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number"></div>
+          <div class="stat-label"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">01</span>
+        <h2 class="section-title">Sobre mim</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            Sou <strong>Gabriella Fernandes Torresani</strong>, estudante de Biomedicina pela Universidade Anhembi Morumbi. Minha trajetória é movida pela <strong>curiosidade científica</strong> e pela vontade de contribuir com a saúde humana de forma significativa.
+          </p>
+          <p>
+            Atuo como <strong>Jovem Aprendiz no Lab-to-Lab Pardini / Grupo Fleury</strong>, onde desenvolvo experiência prática em rotinas pré-analíticas, controle de qualidade e gestão laboratorial — pilares essenciais da minha formação profissional.
+          </p>
+          <p>
+            Acredito que a ciência e a prática laboratorial são ferramentas transformadoras. Busco continuamente aprender, colaborar e crescer em ambientes que valorizem a <strong>precisão, a responsabilidade e a inovação</strong>.
+          </p>
+          <blockquote class="about-highlight">
+            "Apaixonada por ciência, comprometida com a saúde."
+          </blockquote>
+        </div>
+
+        <div class="reveal reveal-delay-1">
+          <p class="interest-tag-title">Áreas de interesse</p>
+          <div style="display:flex; flex-direction:column; gap:.7rem; margin-bottom:2rem;">
+            <div class="interest-pill"><span class="dot"></span> Rotina Laboratorial</div>
+            <div class="interest-pill"><span class="dot"></span> Pesquisa Acadêmica</div>
+            <div class="interest-pill"><span class="dot"></span> Epidemiologia</div>
+            <div class="interest-pill"><span class="dot"></span> Estética Clínica</div>
+          </div>
+          <div class="contact-mini">
+            <p class="contact-mini-title">Contato rápido</p>
+            <div class="contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              gabftorresani@gmail.com
+            </div>
+            <div class="contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.91a16 16 0 006.16 6.16l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              (11) 97204-1415
+            </div>
+            <div class="contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              São Paulo, SP
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIÊNCIA -->
+  <section id="experiencia">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">02</span>
+        <h2 class="section-title">Experiência</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="exp-card reveal">
+        <div class="exp-card-header">
+          <div>
+            <div class="exp-company">Lab-to-Lab Pardini<br/>Grupo Fleury</div>
+            <div class="exp-role">Jovem Aprendiz — Rotina Laboratorial</div>
+          </div>
+          <span class="exp-badge">Em andamento</span>
+        </div>
+        <div class="exp-card-body">
+          <p class="exp-intro">
+            Atuação no suporte às rotinas pré-analíticas e de gestão de qualidade laboratorial no maior grupo de medicina diagnóstica do Brasil, desenvolvendo vivência prática essencial para a formação em Biomedicina.
+          </p>
+          <div class="exp-activities">
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              </div>
+              <div class="activity-title">Controle de Qualidade</div>
+              <div class="activity-desc">Gestão de insumos, verificação rigorosa de lotes e monitoramento de prazos via planilhas de controle, mitigando riscos e garantindo a segurança dos processos.</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              </div>
+              <div class="activity-title">Apoio à CDA</div>
+              <div class="activity-desc">Suporte direto na Central de Distribuição de Amostras, realizando triagem e etiquetação precisa das bags de exames para assegurar rastreabilidade e agilidade do fluxo analítico.</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+              <div class="activity-title">Padronização do Lab</div>
+              <div class="activity-desc">Manutenção da organização do ambiente laboratorial, cumprindo normas de segurança e contribuindo para a eficiência e excelência da equipe técnica.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMAÇÃO -->
+  <section id="formacao">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">03</span>
+        <h2 class="section-title">Formação</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-year-col">
+          <div>
+            <div class="edu-year-label">Período</div>
+            <div class="edu-year-range">2025<br/><span class="edu-year-end">2028</span></div>
+          </div>
+          <div class="edu-status">Em curso</div>
+        </div>
+        <div class="edu-content">
+          <div class="edu-institution">Universidade Anhembi Morumbi — São Paulo</div>
+          <div class="edu-degree">Bacharelado em<br/>Biomedicina</div>
+          <div class="edu-tags">
+            <span class="edu-tag">Biologia Molecular</span>
+            <span class="edu-tag">Imunologia</span>
+            <span class="edu-tag">Microbiologia</span>
+            <span class="edu-tag">Epidemiologia</span>
+            <span class="edu-tag">Análises Clínicas</span>
+            <span class="edu-tag">Bioética</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETÊNCIAS -->
+  <section id="competencias">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">04</span>
+        <h2 class="section-title">Competências</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="skills-grid reveal">
+        <div class="skill-card">
+          <div class="skill-icon">💬</div>
+          <div class="skill-name">Comunicação</div>
+          <div class="skill-desc">Clareza e objetividade na transmissão de informações técnicas e interpessoais.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">📋</div>
+          <div class="skill-name">Organização</div>
+          <div class="skill-desc">Gestão eficiente de materiais, processos e fluxos de trabalho no ambiente laboratorial.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🔬</div>
+          <div class="skill-name">Habilidades Analíticas</div>
+          <div class="skill-desc">Capacidade de interpretar dados, identificar padrões e solucionar problemas com precisão.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🤝</div>
+          <div class="skill-name">Trabalho em Equipe</div>
+          <div class="skill-desc">Colaboração ativa e construtiva em ambientes multidisciplinares e técnicos.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">⚡</div>
+          <div class="skill-name">Proatividade</div>
+          <div class="skill-desc">Iniciativa para antecipar demandas e propor melhorias nos processos.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🛡️</div>
+          <div class="skill-name">Responsabilidade</div>
+          <div class="skill-desc">Comprometimento com a qualidade, a segurança e a ética em todas as atividades.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">⏰</div>
+          <div class="skill-name">Pontualidade</div>
+          <div class="skill-desc">Respeito aos prazos e horários, garantindo a fluidez das rotinas e processos.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">✨</div>
+          <div class="skill-name">Em crescimento</div>
+          <div class="skill-desc">Sempre em busca de novas habilidades e desafios na área da saúde e ciências biomédicas.</div>
+        </div>
+      </div>
+
+      <div class="lang-section reveal reveal-delay-1">
+        <div>
+          <div class="lang-label">Idiomas</div>
+          <div class="lang-name">Inglês</div>
+        </div>
+        <div class="lang-bar-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.45)">Nível Básico</span>
+            <span style="font-size:.7rem;color:rgba(245,240,232,.35)">Em desenvolvimento</span>
+          </div>
+          <div class="lang-bar"><div class="lang-bar-fill"></div></div>
+          <div class="lang-level">Leitura · Compreensão básica · Evolução contínua</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="section-eyebrow" style="color:var(--sand);margin-bottom:1.2rem;">05 — Contato</div>
+          <h2 class="contact-heading">Vamos<br/><em>conversar?</em></h2>
+          <p class="contact-sub">
+            Estou aberta a oportunidades de estágio, iniciação científica e projetos na área de Biomedicina. Entre em contato!
+          </p>
+        </div>
+        <div class="contact-links reveal reveal-delay-1">
+          <a class="contact-link" href="mailto:gabftorresani@gmail.com">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            gabftorresani@gmail.com
+          </a>
+          <a class="contact-link" href="tel:+5511972041415">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.91a16 16 0 006.16 6.16l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            (11) 97204-1415
+          </a>
+          <div class="contact-link" style="cursor:default;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            São Paulo, SP
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2025 Gabriella Fernandes Torresani · Biomedicina</footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

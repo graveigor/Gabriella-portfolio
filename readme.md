@@ -1,6 +1,6 @@
 # 🧬 Portfólio para Gabriella Fernandes Torresani
 
-Portfolio feito para Gabriella Torresanim desenvolvido por Igor Grave Teixeira em HTML/CSS/JS puro, sem dependências externas além de Google Fonts.
+Portfolio feito para Gabriella Torresani desenvolvido por Igor Grave Teixeira em HTML/CSS/JS puro, sem dependências externas além de Google Fonts.
 
 ---
 

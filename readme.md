@@ -25,7 +25,7 @@ package.json          → scripts de build
 | — | **Hero** | Nome, headline, CTAs, painel com marcos (2025 · 2026 · 1+ ano · 2028) |
 | 01 | **Sobre** | Apresentação, áreas de interesse e contato rápido (e-mail, telefone, LinkedIn) |
 | 02 | **Experiência** | Linha do tempo — Auxiliar de Produção Laboratorial (2026–atual) e Jovem Aprendiz / CIEE (2025–2026), Lab-to-Lab Pardini / Grupo Fleury |
-| 03 | **Formação** | Biomedicina — Centro Universitário FAM (2026–2028) · Anhembi Morumbi (2025) · Cursos: Fundação Bradesco, CIEE, DNA Day UNIFESP |
+| 03 | **Formação** | Biomedicina — Centro Universitário FAM (jun/2026–nov/2028) · Anhembi Morumbi (fev/2025–jun/2026) · Cursos: Fundação Bradesco, CIEE, DNA Day UNIFESP |
 | 04 | **Competências** | Competências técnicas por área, habilidades comportamentais e idiomas |
 | 05 | **Contato** | Links diretos para e-mail, telefone e LinkedIn |
 

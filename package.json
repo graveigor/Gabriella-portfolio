@@ -1,0 +1,13 @@
+{
+  "name": "gabriella-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Portfólio de Gabriella Fernandes Torresani — Biomedicina",
+  "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./assets/style.css --minify",
+    "watch": "tailwindcss -i ./src/input.css -o ./assets/style.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

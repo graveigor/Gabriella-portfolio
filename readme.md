@@ -1,14 +1,19 @@
-# 🧬 Portfólio para Gabriella Fernandes Torresani
+# 🧬 Portfólio — Gabriella Fernandes Torresani
 
-Portfolio feito para Gabriella Torresani desenvolvido por Igor Grave Teixeira em HTML/CSS/JS puro, sem dependências externas além de Google Fonts.
+Portfólio de Gabriella Torresani, desenvolvido por Igor Grave Teixeira em HTML + Tailwind CSS + JS puro.
+
+🔗 **Online:** https://gabriella-portfolio-h1pn.vercel.app
 
 ---
 
 ## 📁 Estrutura
 
 ```
-portfolio_gabriella.html   → arquivo único, autocontido
-README.md                  → este arquivo
+index.html            → página única (markup com classes Tailwind)
+src/input.css         → fonte do CSS (diretivas Tailwind + componentes)
+assets/style.css      → CSS compilado e minificado (commitado; é o que o site carrega)
+tailwind.config.js    → tema: paleta, fontes, animações
+package.json          → scripts de build
 ```
 
 ---
@@ -17,10 +22,11 @@ README.md                  → este arquivo
 
 | # | Seção | Conteúdo |
 |---|-------|----------|
-| 01 | **Sobre** | Apresentação pessoal, áreas de interesse e contato rápido (e-mail, telefone, LinkedIn) |
-| 02 | **Experiência** | Lab-to-Lab Pardini / Grupo Fleury — Auxiliar de Produção Laboratorial (2026–atual) e Jovem Aprendiz / CIEE (2025–2026) |
-| 03 | **Formação** | Bacharelado em Biomedicina — Anhembi Morumbi (2025–2028) + cursos e certificações (Fundação Bradesco, CIEE, DNA Day UNIFESP) |
-| 04 | **Competências** | Grid de competências técnicas, habilidades comportamentais e barra de idioma animada |
+| — | **Hero** | Nome, headline, CTAs, painel com marcos (2025 · 2026 · 1+ ano · 2028) |
+| 01 | **Sobre** | Apresentação, áreas de interesse e contato rápido (e-mail, telefone, LinkedIn) |
+| 02 | **Experiência** | Linha do tempo — Auxiliar de Produção Laboratorial (2026–atual) e Jovem Aprendiz / CIEE (2025–2026), Lab-to-Lab Pardini / Grupo Fleury |
+| 03 | **Formação** | Biomedicina — Centro Universitário FAM (2026–2028) · Anhembi Morumbi (2025) · Cursos: Fundação Bradesco, CIEE, DNA Day UNIFESP |
+| 04 | **Competências** | Competências técnicas por área, habilidades comportamentais e idiomas |
 | 05 | **Contato** | Links diretos para e-mail, telefone e LinkedIn |
 
 ---
@@ -29,20 +35,21 @@ README.md                  → este arquivo
 
 - **Paleta:** Teal profundo `#0d4f4a` + Creme `#f5f0e8` + Areia `#c9b89a`
 - **Tipografia:** [Cormorant Garamond](https://fonts.google.com/specimen/Cormorant+Garamond) (display) + [DM Sans](https://fonts.google.com/specimen/DM+Sans) (corpo)
-- **Estética:** Editorial científico — inspirado em revistas de saúde de luxo
-- **Animações:** Scroll reveal suave, hover states, barra de idioma e círculos decorativos animados
+- **Estética:** Editorial científico
+- **Interações:** scroll reveal, nav com seção ativa, menu mobile, marquee de palavras-chave, barras de idioma animadas
 
 ---
 
-## 🚀 Como usar
+## 🛠️ Desenvolvimento
 
-Basta abrir o arquivo diretamente no navegador — nenhuma instalação necessária:
+O CSS compilado já está no repositório, então basta abrir `index.html` no navegador.
+
+Para alterar estilos (editar `src/input.css` ou `tailwind.config.js`, ou usar novas classes no HTML):
 
 ```bash
-open portfolio_gabriella.html
+npm install
+npm run build     # gera assets/style.css
+npm run watch     # recompila a cada alteração
 ```
 
-Ou clique no link: https://gabriella-portfolio-h1pn.vercel.app
 > **Requisito:** conexão com internet para carregar as fontes do Google Fonts.
-
----

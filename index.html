@@ -4,1263 +4,568 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gabriella Torresani — Biomedicina</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --teal:       #0d4f4a;
-      --teal-mid:   #156860;
-      --teal-light: #2a9d8f;
-      --cream:      #f5f0e8;
-      --cream-dark: #ede6d5;
-      --sand:       #c9b89a;
-      --text:       #1a1a1a;
-      --text-muted: #5a5a52;
-      --white:      #fefcf8;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--white);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ─── NOISE TEXTURE OVERLAY ─────────────────────── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: .5;
-    }
-
-    /* ─── NAV ───────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 4rem;
-      background: rgba(245,240,232,.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(13,79,74,.1);
-      animation: fadeDown .8s ease both;
-    }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: .04em;
-      color: var(--teal);
-    }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      font-size: .78rem;
-      font-weight: 500;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color .25s;
-    }
-    .nav-links a:hover { color: var(--teal); }
-
-    /* ─── HERO ──────────────────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-left {
-      background: var(--teal);
-      display: flex;
-      align-items: flex-end;
-      padding: 8rem 4rem 5rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Cell/molecule background decoration */
-    .hero-left::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(42,157,143,.35) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(21,104,96,.4) 0%, transparent 45%);
-    }
-
-    /* Decorative circles mimicking microscope view */
-    .bio-circle {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,.08);
-      pointer-events: none;
-    }
-    .bio-circle:nth-child(1) { width: 420px; height: 420px; top: -80px; right: -120px; }
-    .bio-circle:nth-child(2) { width: 260px; height: 260px; bottom: 60px; right: 40px; border-color: rgba(255,255,255,.12); }
-    .bio-circle:nth-child(3) { width: 140px; height: 140px; top: 40%; left: 30px; border-color: rgba(255,255,255,.07); }
-
-    .hero-left-content {
-      position: relative;
-      z-index: 2;
-      animation: fadeUp .9s .3s ease both;
-    }
-    .hero-tag {
-      display: inline-block;
-      font-size: .68rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--sand);
-      border: 1px solid rgba(201,184,154,.35);
-      padding: .35rem .9rem;
-      border-radius: 2px;
-      margin-bottom: 2rem;
-    }
-    .hero-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      font-weight: 300;
-      line-height: 1.0;
-      color: var(--cream);
-      margin-bottom: .6rem;
-    }
-    .hero-name em {
-      font-style: italic;
-      font-weight: 300;
-      color: rgba(245,240,232,.7);
-      display: block;
-    }
-    .hero-subtitle {
-      font-size: .85rem;
-      font-weight: 300;
-      letter-spacing: .06em;
-      color: rgba(245,240,232,.6);
-      margin-top: 1.5rem;
-      line-height: 1.7;
-      max-width: 320px;
-    }
-    .hero-cta {
-      margin-top: 2.5rem;
-      display: inline-flex;
-      align-items: center;
-      gap: .7rem;
-      padding: .9rem 2rem;
-      background: transparent;
-      border: 1px solid rgba(201,184,154,.45);
-      color: var(--cream);
-      font-family: 'DM Sans', sans-serif;
-      font-size: .78rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      transition: background .3s, border-color .3s;
-    }
-    .hero-cta:hover {
-      background: rgba(201,184,154,.12);
-      border-color: var(--sand);
-    }
-    .hero-cta svg { transition: transform .3s; }
-    .hero-cta:hover svg { transform: translateX(4px); }
-
-    .hero-right {
-      background: var(--cream);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 8rem 4rem 5rem;
-      position: relative;
-      animation: fadeUp .9s .5s ease both;
-    }
-
-    .avatar-frame {
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--teal-mid), var(--teal-light));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 4rem;
-      font-weight: 300;
-      color: var(--cream);
-      box-shadow: 0 20px 60px rgba(13,79,74,.25), 0 0 0 8px var(--cream), 0 0 0 9px rgba(13,79,74,.12);
-      margin-bottom: 2.5rem;
-      position: relative;
-    }
-    .avatar-frame::after {
-      content: '';
-      position: absolute;
-      inset: -16px;
-      border-radius: 50%;
-      border: 1px dashed rgba(13,79,74,.2);
-      animation: spin 20s linear infinite;
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: rgba(13,79,74,.12);
-      width: 100%;
-      max-width: 340px;
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: .5rem;
-    }
-    .stat-box {
-      background: var(--cream);
-      padding: 1.4rem 1.2rem;
-      text-align: center;
-    }
-    .stat-box:hover { background: var(--cream-dark); }
-    .stat-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      font-weight: 300;
-      color: var(--teal);
-      line-height: 1;
-    }
-    .stat-label {
-      font-size: .68rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-top: .4rem;
-    }
-
-    /* ─── SECTION SHARED ────────────────────────────── */
-    section { padding: 7rem 0; }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 4rem;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 1.5rem;
-      margin-bottom: 4rem;
-    }
-    .section-eyebrow {
-      font-size: .68rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      white-space: nowrap;
-    }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--teal);
-    }
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, rgba(13,79,74,.2), transparent);
-    }
-
-    /* ─── ABOUT ─────────────────────────────────────── */
-    #sobre { background: var(--white); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-
-    .about-text p {
-      font-size: 1.05rem;
-      line-height: 1.85;
-      color: var(--text-muted);
-      margin-bottom: 1.4rem;
-    }
-    .about-text p strong {
-      color: var(--teal);
-      font-weight: 500;
-    }
-    .about-highlight {
-      border-left: 3px solid var(--teal-light);
-      padding-left: 1.5rem;
-      margin-top: 2.5rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.45rem;
-      font-style: italic;
-      line-height: 1.5;
-      color: var(--teal);
-    }
-
-    .about-interests {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-    .interest-tag-title {
-      font-size: .7rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: .8rem;
-    }
-    .interest-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      padding: .65rem 1.2rem;
-      background: var(--cream);
-      border: 1px solid var(--cream-dark);
-      border-radius: 2px;
-      font-size: .85rem;
-      color: var(--text-muted);
-      transition: all .25s;
-      cursor: default;
-    }
-    .interest-pill:hover {
-      border-color: var(--teal-light);
-      color: var(--teal);
-      background: rgba(42,157,143,.06);
-      transform: translateX(4px);
-    }
-    .interest-pill .dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--teal-light);
-      flex-shrink: 0;
-    }
-    .pills-wrap { display: flex; flex-wrap: wrap; gap: .6rem; }
-
-    /* Contact mini */
-    .contact-mini {
-      margin-top: 2.5rem;
-      padding: 1.8rem;
-      background: var(--teal);
-      border-radius: 4px;
-    }
-    .contact-mini-title {
-      font-size: .68rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--sand);
-      margin-bottom: 1.2rem;
-    }
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: .8rem;
-      color: rgba(245,240,232,.75);
-      font-size: .85rem;
-      margin-bottom: .7rem;
-    }
-    .contact-item svg { flex-shrink: 0; color: var(--teal-light); }
-
-    /* ─── EXPERIENCE ────────────────────────────────── */
-    #experiencia { background: var(--cream); }
-
-    .exp-card {
-      background: var(--white);
-      border: 1px solid rgba(13,79,74,.1);
-      border-radius: 4px;
-      overflow: hidden;
-      transition: box-shadow .3s, transform .3s;
-    }
-    .exp-card:hover {
-      box-shadow: 0 12px 40px rgba(13,79,74,.1);
-      transform: translateY(-3px);
-    }
-    .exp-card-header {
-      background: var(--teal);
-      padding: 2rem 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    .exp-company {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      font-weight: 300;
-      color: var(--cream);
-    }
-    .exp-role {
-      font-size: .78rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--sand);
-      margin-top: .4rem;
-    }
-    .exp-badge {
-      background: rgba(201,184,154,.18);
-      border: 1px solid rgba(201,184,154,.3);
-      color: var(--sand);
-      padding: .4rem 1rem;
-      border-radius: 2px;
-      font-size: .72rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .exp-card-body { padding: 2.5rem; }
-    .exp-intro {
-      font-size: 1rem;
-      line-height: 1.75;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      max-width: 640px;
-    }
-
-    .exp-activities {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(13,79,74,.08);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .activity-item {
-      background: var(--white);
-      padding: 1.5rem 1.4rem;
-      transition: background .25s;
-    }
-    .activity-item:hover { background: rgba(42,157,143,.05); }
-    .activity-icon {
-      width: 36px; height: 36px;
-      background: rgba(13,79,74,.07);
-      border-radius: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-      color: var(--teal);
-    }
-    .activity-title {
-      font-size: .78rem;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      font-weight: 500;
-      color: var(--teal);
-      margin-bottom: .6rem;
-    }
-    .activity-desc {
-      font-size: .82rem;
-      line-height: 1.6;
-      color: var(--text-muted);
-    }
-
-    /* ─── EDUCATION ─────────────────────────────────── */
-    #formacao { background: var(--white); }
-
-    .edu-card {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 0;
-      border: 1px solid rgba(13,79,74,.1);
-      border-radius: 4px;
-      overflow: hidden;
-      transition: box-shadow .3s;
-    }
-    .edu-card:hover { box-shadow: 0 8px 30px rgba(13,79,74,.08); }
-    .edu-year-col {
-      background: var(--teal);
-      padding: 3rem 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .edu-year-label {
-      font-size: .65rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--sand);
-    }
-    .edu-year-range {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3.2rem;
-      font-weight: 300;
-      color: var(--cream);
-      line-height: 1.1;
-      margin-top: .4rem;
-    }
-    .edu-year-end {
-      font-size: 1.2rem;
-      color: rgba(245,240,232,.45);
-    }
-    .edu-status {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      font-size: .7rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-    }
-    .edu-status::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--teal-light);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    .edu-content {
-      padding: 3rem 2.5rem;
-      background: var(--white);
-    }
-    .edu-institution {
-      font-size: .72rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin-bottom: .8rem;
-    }
-    .edu-degree {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      font-weight: 300;
-      color: var(--teal);
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-    }
-    .edu-tags { display: flex; flex-wrap: wrap; gap: .6rem; }
-    .edu-tag {
-      padding: .35rem .9rem;
-      background: var(--cream);
-      border: 1px solid var(--cream-dark);
-      border-radius: 2px;
-      font-size: .75rem;
-      color: var(--text-muted);
-      letter-spacing: .04em;
-    }
-
-    .exp-stack { display: flex; flex-direction: column; gap: 2rem; }
-    .exp-period {
-      font-size: .72rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: rgba(245,240,232,.55);
-      margin-top: .5rem;
-    }
-    .exp-badge.done {
-      background: rgba(245,240,232,.08);
-      border-color: rgba(245,240,232,.2);
-      color: rgba(245,240,232,.65);
-    }
-
-    /* ─── COURSES ───────────────────────────────────── */
-    .courses-title {
-      font-size: .72rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin: 3rem 0 1.2rem;
-    }
-    .courses-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(13,79,74,.1);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .course-item {
-      background: var(--cream);
-      padding: 1.6rem 1.5rem;
-      transition: background .25s;
-    }
-    .course-item:hover { background: var(--cream-dark); }
-    .course-org {
-      font-size: .7rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin-bottom: .5rem;
-    }
-    .course-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--teal);
-      margin-bottom: .5rem;
-    }
-    .course-desc { font-size: .82rem; line-height: 1.6; color: var(--text-muted); }
-
-    .soft-skills { margin-top: 2.5rem; }
-    .soft-skills-title {
-      font-size: .72rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin-bottom: 1rem;
-    }
-
-    /* ─── SKILLS ────────────────────────────────────── */
-    #competencias { background: var(--cream); }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: rgba(13,79,74,.1);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .skill-card {
-      background: var(--white);
-      padding: 2.2rem 1.8rem;
-      transition: background .25s, transform .25s;
-      cursor: default;
-      position: relative;
-    }
-    .skill-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0; height: 2px;
-      background: var(--teal-light);
-      transition: width .35s ease;
-    }
-    .skill-card:hover {
-      background: rgba(42,157,143,.05);
-    }
-    .skill-card:hover::after { width: 100%; }
-    .skill-icon {
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-    }
-    .skill-name {
-      font-size: .88rem;
-      font-weight: 500;
-      color: var(--teal);
-      margin-bottom: .4rem;
-    }
-    .skill-desc {
-      font-size: .75rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .lang-section {
-      margin-top: 3rem;
-      padding: 2rem 2.5rem;
-      background: var(--teal);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .lang-label {
-      font-size: .7rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--sand);
-      margin-bottom: .5rem;
-    }
-    .lang-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 300;
-      color: var(--cream);
-    }
-    .lang-bar-wrap { flex: 0 0 300px; }
-    .lang-bar {
-      height: 4px;
-      background: rgba(255,255,255,.1);
-      border-radius: 2px;
-      overflow: hidden;
-      margin-top: .8rem;
-    }
-    .lang-bar-fill {
-      height: 100%;
-      background: var(--teal-light);
-      width: 35%;
-      border-radius: 2px;
-      animation: growBar 1.2s 1s ease both;
-    }
-    .lang-level {
-      font-size: .72rem;
-      color: rgba(245,240,232,.5);
-      margin-top: .5rem;
-      letter-spacing: .08em;
-    }
-
-    /* ─── CONTACT / FOOTER ──────────────────────────── */
-    #contato {
-      background: var(--teal);
-      padding: 6rem 0;
-      position: relative;
-      overflow: hidden;
-    }
-    #contato::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 10% 50%, rgba(42,157,143,.3) 0%, transparent 50%),
-        radial-gradient(circle at 90% 20%, rgba(21,104,96,.5) 0%, transparent 40%);
-      pointer-events: none;
-    }
-    .contact-grid {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-    }
-    .contact-heading {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 300;
-      color: var(--cream);
-      line-height: 1.1;
-    }
-    .contact-heading em {
-      font-style: italic;
-      color: var(--sand);
-    }
-    .contact-sub {
-      font-size: .9rem;
-      color: rgba(245,240,232,.55);
-      line-height: 1.7;
-      margin-top: 1.5rem;
-      max-width: 360px;
-    }
-    .contact-links { display: flex; flex-direction: column; gap: 1px; }
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      padding: 1.4rem 1.8rem;
-      background: rgba(255,255,255,.05);
-      text-decoration: none;
-      color: rgba(245,240,232,.75);
-      font-size: .9rem;
-      transition: background .25s, color .25s;
-      border-radius: 2px;
-      margin-bottom: 1px;
-    }
-    .contact-link:hover {
-      background: rgba(255,255,255,.1);
-      color: var(--cream);
-    }
-    .contact-link svg { color: var(--teal-light); flex-shrink: 0; }
-
-    footer {
-      background: #081f1d;
-      text-align: center;
-      padding: 1.8rem;
-      font-size: .72rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: rgba(245,240,232,.25);
-    }
-
-    /* ─── SCROLL REVEALS ────────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .75s ease, transform .75s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-    .reveal-delay-1 { transition-delay: .1s; }
-    .reveal-delay-2 { transition-delay: .2s; }
-    .reveal-delay-3 { transition-delay: .3s; }
-
-    /* ─── KEYFRAMES ─────────────────────────────────── */
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-16px); }
-      to   { opacity: 1; transform: none; }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(32px); }
-      to   { opacity: 1; transform: none; }
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: .5; transform: scale(.8); }
-    }
-    @keyframes growBar {
-      from { width: 0; }
-      to   { width: 35%; }
-    }
-
-    /* ─── RESPONSIVE ────────────────────────────────── */
-    @media (max-width: 900px) {
-      nav {
-        padding: 0 1.5rem;
-        height: 52px;
-        min-height: 52px;
-      }
-      .nav-logo {
-        white-space: nowrap;
-        font-size: .95rem;
-        line-height: 1;
-      }
-      .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; }
-      .hero-left {
-        padding: 2.5rem 2rem 3rem;
-        padding-top: calc(52px + 2.5rem);
-        min-height: auto;
-        align-items: flex-start;
-      }
-      .hero-right { padding: 3rem 2rem 4rem; }
-      .container { padding: 0 1.5rem; }
-      .about-grid,
-      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .exp-activities { grid-template-columns: 1fr; }
-      .courses-grid { grid-template-columns: 1fr; }
-      .exp-card-header { flex-direction: column; }
-      .edu-card { grid-template-columns: 1fr; }
-      .skills-grid { grid-template-columns: repeat(2, 1fr); }
-      .lang-section { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
-      .lang-bar-wrap { width: 100%; flex: none; }
-    }
-  </style>
+  <meta name="description" content="Gabriella Fernandes Torresani — Auxiliar de Produção Laboratorial no Grupo Fleury e estudante de Biomedicina. Rotina pré-analítica, CDA, rastreabilidade, biossegurança." />
+  <meta property="og:title" content="Gabriella Torresani — Biomedicina" />
+  <meta property="og:description" content="Auxiliar de Produção Laboratorial no Grupo Fleury · Estudante de Biomedicina" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
 </head>
-<body>
+<body class="noise">
 
-  <!-- NAV -->
-  <nav>
-    <span class="nav-logo">G. Torresani</span>
-    <ul class="nav-links">
-      <li><a href="#sobre">Sobre</a></li>
-      <li><a href="#experiencia">Experiência</a></li>
-      <li><a href="#formacao">Formação</a></li>
-      <li><a href="#competencias">Competências</a></li>
-      <li><a href="#contato">Contato</a></li>
-    </ul>
-  </nav>
+  <!-- ─── NAV ──────────────────────────────────────────── -->
+  <header class="fixed inset-x-0 top-0 z-50 animate-fade-down border-b border-teal-900/10 bg-cream/85 backdrop-blur-md">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-8">
+      <a href="#top" class="font-serif text-lg font-semibold tracking-wide text-teal-900">G. Torresani</a>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-left">
-      <div class="bio-circle"></div>
-      <div class="bio-circle"></div>
-      <div class="bio-circle"></div>
-      <div class="hero-left-content">
-        <span class="hero-tag">Biomedicina · Medicina Diagnóstica · Saúde</span>
-        <h1 class="hero-name">
-          Gabriella<br/>
-          <em>Torresani</em>
-        </h1>
-        <p class="hero-subtitle">
-          Auxiliar de Produção Laboratorial no Grupo Fleury e estudante de Biomedicina — atuando na Central de Distribuição de Amostras com foco em rastreabilidade, controle de qualidade e biossegurança.
-        </p>
-        <a href="#sobre" class="hero-cta">
-          Explorar portfólio
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
+      <ul class="hidden items-center gap-8 md:flex" id="nav-links">
+        <li><a class="nav-link" href="#sobre">Sobre</a></li>
+        <li><a class="nav-link" href="#experiencia">Experiência</a></li>
+        <li><a class="nav-link" href="#formacao">Formação</a></li>
+        <li><a class="nav-link" href="#competencias">Competências</a></li>
+        <li><a class="nav-link" href="#contato">Contato</a></li>
+      </ul>
+
+      <a href="https://www.linkedin.com/in/gabriellatorresani/" target="_blank" rel="noopener" class="hidden items-center gap-2 text-[0.72rem] uppercase tracking-[0.14em] text-teal-900/70 transition hover:text-teal-900 md:inline-flex">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        LinkedIn
+      </a>
+
+      <button id="menu-btn" class="flex h-10 w-10 items-center justify-center text-teal-900 md:hidden" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path id="menu-icon" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </nav>
+
+    <div id="mobile-menu" class="hidden border-t border-teal-900/10 bg-cream md:hidden">
+      <ul class="flex flex-col px-5 py-3">
+        <li><a class="block py-3 text-[0.8rem] uppercase tracking-[0.14em] text-teal-900" href="#sobre">Sobre</a></li>
+        <li><a class="block py-3 text-[0.8rem] uppercase tracking-[0.14em] text-teal-900" href="#experiencia">Experiência</a></li>
+        <li><a class="block py-3 text-[0.8rem] uppercase tracking-[0.14em] text-teal-900" href="#formacao">Formação</a></li>
+        <li><a class="block py-3 text-[0.8rem] uppercase tracking-[0.14em] text-teal-900" href="#competencias">Competências</a></li>
+        <li><a class="block py-3 text-[0.8rem] uppercase tracking-[0.14em] text-teal-900" href="#contato">Contato</a></li>
+        <li><a class="block py-3 text-[0.8rem] uppercase tracking-[0.14em] text-teal-500" href="https://www.linkedin.com/in/gabriellatorresani/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+      </ul>
     </div>
-    <div class="hero-right">
-      <div class="avatar-frame">GT</div>
-      <div class="hero-stats">
-        <div class="stat-box">
-          <div class="stat-number">2025</div>
-          <div class="stat-label">Início Graduação</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number">2026</div>
-          <div class="stat-label">Efetivação Fleury</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number">1+</div>
-          <div class="stat-label">Ano de Laboratório</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number">3</div>
-          <div class="stat-label">Cursos &amp; Eventos</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  </header>
 
-  <!-- SOBRE -->
-  <section id="sobre">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-eyebrow">01</span>
-        <h2 class="section-title">Sobre mim</h2>
-        <div class="section-line"></div>
-      </div>
+  <main id="top">
 
-      <div class="about-grid">
-        <div class="about-text reveal">
-          <p>
-            Sou <strong>Gabriella Fernandes Torresani</strong>, estudante de Biomedicina pela Universidade Anhembi Morumbi, apaixonada por ciência e pesquisa em saúde. Minha trajetória é movida pela <strong>curiosidade científica</strong> e pela vontade de contribuir com a saúde humana de forma significativa.
-          </p>
-          <p>
-            Atuo como <strong>Auxiliar de Produção Laboratorial no Lab-to-Lab Pardini / Grupo Fleury</strong>, efetivada após um ano como Jovem Aprendiz. Na Central de Distribuição de Amostras (CDA), trabalho com triagem, recebimento logístico de rotas e malotes, envio interunidades, apoio à automação (linhas GLP), soroteca e tratamento de pendências operacionais.
-          </p>
-          <p>
-            Atuo na medicina diagnóstica com responsabilidade e atenção aos detalhes, priorizando <strong>rastreabilidade, controle de qualidade, biossegurança</strong> e a integridade do fluxo pré-analítico e analítico — e mantenho o interesse aberto para pesquisa acadêmica, epidemiologia e saúde pública.
-          </p>
-          <blockquote class="about-highlight">
-            "Apaixonada por ciência, comprometida com a saúde."
-          </blockquote>
-        </div>
+    <!-- ─── HERO ───────────────────────────────────────── -->
+    <section class="relative grid min-h-screen grid-cols-1 lg:grid-cols-[1.15fr_1fr]">
+      <!-- left -->
+      <div class="relative flex flex-col justify-center overflow-hidden bg-cream px-5 pb-16 pt-32 md:px-12 lg:px-16 lg:pb-20 lg:pt-36">
+        <div aria-hidden="true" class="pointer-events-none absolute -left-24 -top-24 h-96 w-96 animate-drift rounded-full border border-teal-900/10"></div>
+        <div aria-hidden="true" class="pointer-events-none absolute -bottom-40 right-10 h-[28rem] w-[28rem] animate-drift rounded-full border border-teal-900/10 [animation-delay:-5s]"></div>
+        <div aria-hidden="true" class="pointer-events-none absolute left-1/3 top-1/3 h-56 w-56 animate-drift rounded-full bg-teal-500/5 [animation-delay:-9s]"></div>
 
-        <div class="reveal reveal-delay-1">
-          <p class="interest-tag-title">Áreas de interesse</p>
-          <div style="display:flex; flex-direction:column; gap:.7rem; margin-bottom:2rem;">
-            <div class="interest-pill"><span class="dot"></span> Rotina Laboratorial</div>
-            <div class="interest-pill"><span class="dot"></span> Pesquisa Acadêmica</div>
-            <div class="interest-pill"><span class="dot"></span> Epidemiologia</div>
-            <div class="interest-pill"><span class="dot"></span> Saúde Pública</div>
-          </div>
-          <div class="contact-mini">
-            <p class="contact-mini-title">Contato rápido</p>
-            <div class="contact-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              gabftorresani@gmail.com
-            </div>
-            <div class="contact-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.91a16 16 0 006.16 6.16l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-              (11) 97204-1415
-            </div>
-            <div class="contact-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              São Paulo, SP
-            </div>
-            <a class="contact-item" href="https://www.linkedin.com/in/gabriellatorresani/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-              linkedin.com/in/gabriellatorresani
+        <div class="relative max-w-xl animate-fade-up">
+          <p class="eyebrow mb-6 flex items-center gap-3">
+            <span class="h-px w-8 bg-teal-500"></span>
+            Biomedicina · Medicina Diagnóstica
+          </p>
+          <h1 class="font-serif text-[3.4rem] font-light leading-[0.95] text-teal-900 sm:text-7xl lg:text-[5.4rem]">
+            Gabriella<br/>
+            <em class="font-normal italic text-teal-500">Torresani</em>
+          </h1>
+          <p class="mt-7 max-w-md text-[1.05rem] font-light leading-relaxed text-muted">
+            Auxiliar de Produção Laboratorial no <strong class="font-medium text-teal-900">Grupo Fleury</strong> e estudante de Biomedicina. Atuo na Central de Distribuição de Amostras com foco em rastreabilidade, controle de qualidade e biossegurança.
+          </p>
+          <div class="mt-10 flex flex-wrap gap-3">
+            <a href="#experiencia" class="btn-primary">
+              Ver experiência
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
+            <a href="#contato" class="btn-ghost">Entrar em contato</a>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- EXPERIÊNCIA -->
-  <section id="experiencia">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-eyebrow">02</span>
-        <h2 class="section-title">Experiência</h2>
-        <div class="section-line"></div>
-      </div>
+      <!-- right -->
+      <div class="relative flex flex-col justify-center gap-8 bg-teal-900 px-5 py-16 text-cream md:px-12 lg:px-14 lg:pt-36">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(42,157,143,.35),transparent_55%)]"></div>
 
-      <div class="exp-stack">
-
-        <div class="exp-card reveal">
-          <div class="exp-card-header">
-            <div>
-              <div class="exp-company">Lab-to-Lab Pardini<br/>Grupo Fleury</div>
-              <div class="exp-role">Auxiliar de Produção Laboratorial</div>
-              <div class="exp-period">São Paulo, SP · 2026 – Atual · Efetivada após um ano como Jovem Aprendiz</div>
-            </div>
-            <span class="exp-badge">Atual</span>
-          </div>
-          <div class="exp-card-body">
-            <p class="exp-intro">
-              Atuação na Central de Distribuição de Amostras (CDA) e apoio à automação laboratorial no maior grupo de medicina diagnóstica do Brasil, garantindo rastreabilidade, controle de qualidade e integridade do fluxo pré-analítico e analítico.
-            </p>
-            <div class="exp-activities">
-            <div class="activity-item">
-              <div class="activity-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              </div>
-              <div class="activity-title">Central de Distribuição (CDA)</div>
-              <div class="activity-desc">Triagem, conferência e etiquetagem de amostras biológicas, garantindo rastreabilidade desde a entrada do material.</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-              </div>
-              <div class="activity-title">Recebimento Logístico</div>
-              <div class="activity-desc">Recebimento de rotas e malotes, com conferência de volumes, condições de transporte e registro em sistema.</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-              </div>
-              <div class="activity-title">Envio Interunidades</div>
-              <div class="activity-desc">Separação e organização de exames destinados ao Hermes Pardini (MG), assegurando prazos e integridade das amostras em trânsito.</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
-              </div>
-              <div class="activity-title">Apoio à Automação</div>
-              <div class="activity-desc">Alimentação e acompanhamento das linhas automatizadas (GLP), contribuindo para a continuidade e produtividade do fluxo analítico.</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
-              </div>
-              <div class="activity-title">Soroteca</div>
-              <div class="activity-desc">Arquivamento, controle e descarte controlado de amostras conforme normas de biossegurança e procedimentos operacionais padrão (POP).</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-              </div>
-              <div class="activity-title">Gestão de Pendências</div>
-              <div class="activity-desc">Triagem e tratamento de amostras com pendências operacionais (evento 120), identificando não conformidades do fluxo pré-analítico e apoiando a correção.</div>
-            </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="exp-card reveal reveal-delay-1">
-          <div class="exp-card-header">
-            <div>
-              <div class="exp-company">Lab-to-Lab Pardini<br/>Grupo Fleury</div>
-              <div class="exp-role">Jovem Aprendiz — Programa CIEE</div>
-              <div class="exp-period">São Paulo, SP · 2025 – 2026</div>
-            </div>
-            <span class="exp-badge done">Concluído</span>
-          </div>
-          <div class="exp-card-body">
-            <p class="exp-intro">
-              Primeira experiência em medicina diagnóstica, com suporte às rotinas pré-analíticas e à gestão de qualidade laboratorial — vivência que resultou na efetivação como Auxiliar de Produção Laboratorial.
-            </p>
-            <div class="exp-activities">
-            <div class="activity-item">
-              <div class="activity-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-              </div>
-              <div class="activity-title">Controle de Qualidade</div>
-              <div class="activity-desc">Gestão da guarda de insumos, verificação rigorosa de lotes e monitoramento de prazos de validade em planilhas de controle, reduzindo riscos operacionais.</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              </div>
-              <div class="activity-title">Apoio à CDA</div>
-              <div class="activity-desc">Suporte direto na Central de Distribuição de Amostras, com triagem e etiquetagem precisa das bags de exames para assegurar rastreabilidade e agilidade do fluxo analítico.</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-              </div>
-              <div class="activity-title">Padronização do Lab</div>
-              <div class="activity-desc">Manutenção da organização do ambiente laboratorial, cumprimento das normas de segurança e suporte à equipe técnica.</div>
-            </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- FORMAÇÃO -->
-  <section id="formacao">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-eyebrow">03</span>
-        <h2 class="section-title">Formação</h2>
-        <div class="section-line"></div>
-      </div>
-
-      <div class="edu-card reveal">
-        <div class="edu-year-col">
+        <div class="relative flex items-center gap-6 animate-fade-up [animation-delay:.15s]">
+          <div class="flex h-24 w-24 shrink-0 items-center justify-center rounded-full border border-sand/40 font-serif text-3xl font-light text-sand">GT</div>
           <div>
-            <div class="edu-year-label">Período</div>
-            <div class="edu-year-range">2025<br/><span class="edu-year-end">2028</span></div>
-          </div>
-          <div class="edu-status">Em curso</div>
-        </div>
-        <div class="edu-content">
-          <div class="edu-institution">Universidade Anhembi Morumbi — São Paulo</div>
-          <div class="edu-degree">Bacharelado em<br/>Biomedicina</div>
-          <div class="edu-tags">
-            <span class="edu-tag">Biologia Molecular</span>
-            <span class="edu-tag">Imunologia</span>
-            <span class="edu-tag">Microbiologia</span>
-            <span class="edu-tag">Epidemiologia</span>
-            <span class="edu-tag">Análises Clínicas</span>
-            <span class="edu-tag">Bioética</span>
+            <p class="font-serif text-2xl font-light leading-tight">Gabriella Fernandes Torresani</p>
+            <p class="mt-1 text-[0.72rem] uppercase tracking-[0.14em] text-sand">Auxiliar de Produção Laboratorial</p>
+            <p class="mt-1 text-[0.72rem] uppercase tracking-[0.14em] text-cream/50">Estudante de Biomedicina · São Paulo, SP</p>
           </div>
         </div>
-      </div>
 
-      <div class="reveal reveal-delay-1">
-        <p class="courses-title">Cursos &amp; Certificações</p>
-        <div class="courses-grid">
-          <div class="course-item">
-            <div class="course-org">Fundação Bradesco</div>
-            <div class="course-name">Desenvolvimento Profissional</div>
-            <div class="course-desc">Capacitação em competências profissionais e comportamentais para o mercado de trabalho.</div>
+        <div class="relative grid grid-cols-2 gap-px border border-cream/10 bg-cream/10 animate-fade-up [animation-delay:.3s]">
+          <div class="bg-teal-900 p-5">
+            <p class="font-serif text-4xl font-light text-cream">2025</p>
+            <p class="mt-1 text-[0.68rem] uppercase tracking-[0.14em] text-cream/50">Início no Grupo Fleury</p>
           </div>
-          <div class="course-item">
-            <div class="course-org">CIEE</div>
-            <div class="course-name">Programa Jovem Aprendiz</div>
-            <div class="course-desc">Capacitação teórica do Centro de Integração Empresa-Escola, complementar à atuação prática no Grupo Fleury.</div>
+          <div class="bg-teal-900 p-5">
+            <p class="font-serif text-4xl font-light text-cream">2026</p>
+            <p class="mt-1 text-[0.68rem] uppercase tracking-[0.14em] text-cream/50">Efetivação</p>
           </div>
-          <div class="course-item">
-            <div class="course-org">UNIFESP</div>
-            <div class="course-name">DNA Day</div>
-            <div class="course-desc">Evento sobre genética, biologia molecular e suas aplicações em saúde.</div>
+          <div class="bg-teal-900 p-5">
+            <p class="font-serif text-4xl font-light text-cream">1<span class="text-teal-300">+</span></p>
+            <p class="mt-1 text-[0.68rem] uppercase tracking-[0.14em] text-cream/50">Ano de laboratório</p>
+          </div>
+          <div class="bg-teal-900 p-5">
+            <p class="font-serif text-4xl font-light text-cream">2028</p>
+            <p class="mt-1 text-[0.68rem] uppercase tracking-[0.14em] text-cream/50">Conclusão prevista</p>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- COMPETÊNCIAS -->
-  <section id="competencias">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-eyebrow">04</span>
-        <h2 class="section-title">Competências</h2>
-        <div class="section-line"></div>
-      </div>
-
-      <div class="skills-grid reveal">
-        <div class="skill-card">
-          <div class="skill-icon">🧪</div>
-          <div class="skill-name">Rotina Pré-analítica e Analítica</div>
-          <div class="skill-desc">Central de Distribuição de Amostras (CDA): triagem, etiquetagem e rastreabilidade de amostras biológicas.</div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">📦</div>
-          <div class="skill-name">Logística de Amostras</div>
-          <div class="skill-desc">Recebimento de rotas e malotes, conferência de volumes e separação de exames para envio interunidades.</div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">⚙️</div>
-          <div class="skill-name">Automação Laboratorial</div>
-          <div class="skill-desc">Alimentação e acompanhamento de linhas automatizadas (GLP), apoiando a continuidade do fluxo analítico.</div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🗄️</div>
-          <div class="skill-name">Soroteca</div>
-          <div class="skill-desc">Arquivamento, controle e descarte controlado de amostras conforme normas e POPs.</div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">✅</div>
-          <div class="skill-name">Controle de Qualidade</div>
-          <div class="skill-desc">Gestão de insumos, verificação de lotes e monitoramento de prazos de validade em planilhas de controle.</div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🛡️</div>
-          <div class="skill-name">Biossegurança & POP</div>
-          <div class="skill-desc">Boas práticas de laboratório, normas de biossegurança e procedimentos operacionais padrão.</div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">💻</div>
-          <div class="skill-name">Sistemas & Office</div>
-          <div class="skill-desc">Pacote Office, planilhas de controle e sistemas laboratoriais para registro e rastreabilidade.</div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🧬</div>
-          <div class="skill-name">Fundamentos Biomédicos</div>
-          <div class="skill-desc">Bases de bioética e biologia molecular aplicadas à prática em medicina diagnóstica.</div>
-        </div>
-      </div>
-
-      <div class="soft-skills reveal reveal-delay-1">
-        <p class="soft-skills-title">Habilidades comportamentais</p>
-        <div class="edu-tags">
-          <span class="edu-tag">Atenção aos detalhes</span>
-          <span class="edu-tag">Organização</span>
-          <span class="edu-tag">Responsabilidade</span>
-          <span class="edu-tag">Comunicação</span>
-          <span class="edu-tag">Trabalho em equipe</span>
-          <span class="edu-tag">Proatividade</span>
-          <span class="edu-tag">Pensamento analítico</span>
-          <span class="edu-tag">Aprendizado contínuo</span>
-        </div>
-      </div>
-
-      <div class="lang-section reveal reveal-delay-1">
-        <div>
-          <div class="lang-label">Idiomas</div>
-          <div class="lang-name">Inglês</div>
-          <div class="lang-level" style="margin-top:.6rem;">Português · Nativo</div>
-        </div>
-        <div class="lang-bar-wrap">
-          <div style="display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.45)">Nível Básico</span>
-            <span style="font-size:.7rem;color:rgba(245,240,232,.35)">Em desenvolvimento</span>
+        <dl class="relative grid grid-cols-1 gap-3 text-sm animate-fade-up [animation-delay:.45s] sm:grid-cols-2">
+          <div class="flex items-start gap-3">
+            <dt class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-300"></dt>
+            <dd><span class="block text-[0.68rem] uppercase tracking-[0.14em] text-cream/50">Atualmente</span><span class="text-cream/90">Lab-to-Lab Pardini / Grupo Fleury</span></dd>
           </div>
-          <div class="lang-bar"><div class="lang-bar-fill"></div></div>
-          <div class="lang-level">Leitura · Compreensão básica · Evolução contínua</div>
-        </div>
+          <div class="flex items-start gap-3">
+            <dt class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-300"></dt>
+            <dd><span class="block text-[0.68rem] uppercase tracking-[0.14em] text-cream/50">Formação</span><span class="text-cream/90">Biomedicina · Centro Universitário FAM</span></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ─── MARQUEE ────────────────────────────────────── -->
+    <div class="overflow-hidden border-y border-teal-900/10 bg-paper py-3" aria-hidden="true">
+      <div class="flex w-max animate-marquee whitespace-nowrap font-serif text-lg italic text-teal-900/60">
+        <span class="px-6">Central de Distribuição de Amostras</span><span class="text-teal-500">·</span>
+        <span class="px-6">Rastreabilidade</span><span class="text-teal-500">·</span>
+        <span class="px-6">Biossegurança</span><span class="text-teal-500">·</span>
+        <span class="px-6">Automação GLP</span><span class="text-teal-500">·</span>
+        <span class="px-6">Soroteca</span><span class="text-teal-500">·</span>
+        <span class="px-6">Controle de Qualidade</span><span class="text-teal-500">·</span>
+        <span class="px-6">Envio Interunidades</span><span class="text-teal-500">·</span>
+        <span class="px-6">Fluxo Pré-analítico</span><span class="text-teal-500">·</span>
+        <span class="px-6">Central de Distribuição de Amostras</span><span class="text-teal-500">·</span>
+        <span class="px-6">Rastreabilidade</span><span class="text-teal-500">·</span>
+        <span class="px-6">Biossegurança</span><span class="text-teal-500">·</span>
+        <span class="px-6">Automação GLP</span><span class="text-teal-500">·</span>
+        <span class="px-6">Soroteca</span><span class="text-teal-500">·</span>
+        <span class="px-6">Controle de Qualidade</span><span class="text-teal-500">·</span>
+        <span class="px-6">Envio Interunidades</span><span class="text-teal-500">·</span>
+        <span class="px-6">Fluxo Pré-analítico</span><span class="text-teal-500">·</span>
       </div>
     </div>
-  </section>
 
-  <!-- CONTATO -->
-  <section id="contato">
-    <div class="container">
-      <div class="contact-grid">
+    <!-- ─── SOBRE ──────────────────────────────────────── -->
+    <section id="sobre" class="bg-paper py-24 md:py-32">
+      <div class="mx-auto max-w-6xl px-5 md:px-8">
+        <div class="mb-14 flex items-end gap-5 reveal">
+          <span class="eyebrow">01</span>
+          <h2 class="section-title">Sobre mim</h2>
+          <span class="mb-3 hidden h-px flex-1 bg-teal-900/15 sm:block"></span>
+        </div>
+
+        <div class="grid grid-cols-1 gap-14 lg:grid-cols-[1.4fr_1fr] lg:gap-20">
+          <div class="space-y-6 text-[1.05rem] font-light leading-relaxed text-muted reveal">
+            <p>
+              Sou <strong class="font-medium text-teal-900">Gabriella Fernandes Torresani</strong>, estudante de Biomedicina apaixonada por ciência e pesquisa em saúde, construindo uma base sólida nos fundamentos biomédicos.
+            </p>
+            <p>
+              Atuo como <strong class="font-medium text-teal-900">Auxiliar de Produção Laboratorial no Lab-to-Lab Pardini / Grupo Fleury</strong>, efetivada após um ano como Jovem Aprendiz. Na Central de Distribuição de Amostras (CDA), trabalho com triagem, recebimento logístico de rotas e malotes, envio interunidades ao Hermes Pardini, apoio às linhas automatizadas (GLP), soroteca e tratamento de pendências operacionais.
+            </p>
+            <p>
+              Atuo na medicina diagnóstica com responsabilidade e atenção aos detalhes, priorizando <strong class="font-medium text-teal-900">rastreabilidade, controle de qualidade e biossegurança</strong> — e mantenho o interesse aberto para rotina laboratorial, pesquisa acadêmica, epidemiologia e saúde pública.
+            </p>
+            <blockquote class="border-l-2 border-teal-500 pl-6 font-serif text-2xl italic leading-snug text-teal-900">
+              "Apaixonada por ciência, comprometida com a saúde."
+            </blockquote>
+          </div>
+
+          <div class="space-y-10 reveal reveal-1">
+            <div>
+              <p class="eyebrow mb-4">Áreas de interesse</p>
+              <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
+                <li class="flex items-center gap-3 border border-teal-900/10 bg-cream px-4 py-3 text-sm text-teal-900 transition hover:border-teal-500/50"><span class="h-1.5 w-1.5 rounded-full bg-teal-500"></span>Rotina Laboratorial</li>
+                <li class="flex items-center gap-3 border border-teal-900/10 bg-cream px-4 py-3 text-sm text-teal-900 transition hover:border-teal-500/50"><span class="h-1.5 w-1.5 rounded-full bg-teal-500"></span>Pesquisa Acadêmica</li>
+                <li class="flex items-center gap-3 border border-teal-900/10 bg-cream px-4 py-3 text-sm text-teal-900 transition hover:border-teal-500/50"><span class="h-1.5 w-1.5 rounded-full bg-teal-500"></span>Epidemiologia</li>
+                <li class="flex items-center gap-3 border border-teal-900/10 bg-cream px-4 py-3 text-sm text-teal-900 transition hover:border-teal-500/50"><span class="h-1.5 w-1.5 rounded-full bg-teal-500"></span>Saúde Pública</li>
+              </ul>
+            </div>
+
+            <div class="border-t border-teal-900/10 pt-8">
+              <p class="eyebrow mb-4">Contato rápido</p>
+              <ul class="space-y-3 text-sm text-muted">
+                <li><a class="flex items-center gap-3 transition hover:text-teal-900" href="mailto:gabftorresani@gmail.com"><svg class="h-4 w-4 shrink-0 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>gabftorresani@gmail.com</a></li>
+                <li><a class="flex items-center gap-3 transition hover:text-teal-900" href="tel:+5511972041415"><svg class="h-4 w-4 shrink-0 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012 4.2 2 2 0 014 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8 9.9a16 16 0 006.2 6.2l1.3-1.3a2 2 0 012.1-.5c.9.3 1.9.6 2.8.7a2 2 0 011.6 2z"/></svg>(11) 97204-1415</a></li>
+                <li><a class="flex items-center gap-3 transition hover:text-teal-900" href="https://www.linkedin.com/in/gabriellatorresani/" target="_blank" rel="noopener"><svg class="h-4 w-4 shrink-0 text-teal-500" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>linkedin.com/in/gabriellatorresani</a></li>
+                <li class="flex items-center gap-3"><svg class="h-4 w-4 shrink-0 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>São Paulo, SP</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── EXPERIÊNCIA ────────────────────────────────── -->
+    <section id="experiencia" class="bg-cream py-24 md:py-32">
+      <div class="mx-auto max-w-6xl px-5 md:px-8">
+        <div class="mb-14 flex items-end gap-5 reveal">
+          <span class="eyebrow">02</span>
+          <h2 class="section-title">Experiência</h2>
+          <span class="mb-3 hidden h-px flex-1 bg-teal-900/15 sm:block"></span>
+        </div>
+
+        <ol class="relative space-y-10 border-l border-teal-900/15 pl-8 md:pl-14">
+
+          <!-- Auxiliar de Produção -->
+          <li class="relative reveal">
+            <span class="absolute -left-[2.55rem] top-7 h-3 w-3 rounded-full border-2 border-cream bg-teal-500 ring-4 ring-teal-500/20 md:-left-[4.05rem]"></span>
+            <article class="card overflow-hidden">
+              <header class="flex flex-col gap-5 bg-teal-900 px-6 py-7 text-cream md:flex-row md:items-start md:justify-between md:px-9">
+                <div>
+                  <p class="text-[0.7rem] uppercase tracking-[0.14em] text-sand">Lab-to-Lab Pardini · Grupo Fleury</p>
+                  <h3 class="mt-2 font-serif text-3xl font-light leading-tight md:text-4xl">Auxiliar de Produção Laboratorial</h3>
+                  <p class="mt-2 text-sm text-cream/60">São Paulo, SP · 2026 – Atual · Efetivada após um ano como Jovem Aprendiz</p>
+                </div>
+                <span class="inline-flex w-fit items-center gap-2 border border-teal-300/40 bg-teal-300/10 px-3 py-1.5 text-[0.7rem] uppercase tracking-[0.14em] text-teal-300">
+                  <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-teal-300"></span>Atual
+                </span>
+              </header>
+              <div class="px-6 py-8 md:px-9">
+                <p class="mb-8 max-w-2xl font-light leading-relaxed text-muted">
+                  Atuação na Central de Distribuição de Amostras (CDA) e apoio à automação laboratorial no maior grupo de medicina diagnóstica do Brasil, garantindo rastreabilidade, controle de qualidade e integridade do fluxo pré-analítico e analítico.
+                </p>
+                <ul class="grid grid-cols-1 gap-px overflow-hidden border border-teal-900/10 bg-teal-900/10 sm:grid-cols-2 lg:grid-cols-3">
+                  <li class="bg-paper p-5 transition hover:bg-teal-50">
+                    <svg class="mb-3 h-5 w-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    <h4 class="text-[0.76rem] font-medium uppercase tracking-wider text-teal-900">Central de Distribuição (CDA)</h4>
+                    <p class="mt-2 text-sm leading-relaxed text-muted">Triagem, conferência e etiquetagem de amostras biológicas, garantindo rastreabilidade desde a entrada do material.</p>
+                  </li>
+                  <li class="bg-paper p-5 transition hover:bg-teal-50">
+                    <svg class="mb-3 h-5 w-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                    <h4 class="text-[0.76rem] font-medium uppercase tracking-wider text-teal-900">Recebimento Logístico</h4>
+                    <p class="mt-2 text-sm leading-relaxed text-muted">Recebimento de rotas e malotes, com conferência de volumes e condições de transporte.</p>
+                  </li>
+                  <li class="bg-paper p-5 transition hover:bg-teal-50">
+                    <svg class="mb-3 h-5 w-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                    <h4 class="text-[0.76rem] font-medium uppercase tracking-wider text-teal-900">Envio Interunidades</h4>
+                    <p class="mt-2 text-sm leading-relaxed text-muted">Separação e organização de exames para o Hermes Pardini (MG), assegurando prazos e integridade das amostras em trânsito.</p>
+                  </li>
+                  <li class="bg-paper p-5 transition hover:bg-teal-50">
+                    <svg class="mb-3 h-5 w-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+                    <h4 class="text-[0.76rem] font-medium uppercase tracking-wider text-teal-900">Apoio à Automação</h4>
+                    <p class="mt-2 text-sm leading-relaxed text-muted">Alimentação e acompanhamento das linhas automatizadas (GLP), contribuindo para a continuidade e produtividade do fluxo analítico.</p>
+                  </li>
+                  <li class="bg-paper p-5 transition hover:bg-teal-50">
+                    <svg class="mb-3 h-5 w-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+                    <h4 class="text-[0.76rem] font-medium uppercase tracking-wider text-teal-900">Soroteca</h4>
+                    <p class="mt-2 text-sm leading-relaxed text-muted">Arquivamento, controle e descarte controlado de amostras conforme normas de biossegurança e POPs.</p>
+                  </li>
+                  <li class="bg-paper p-5 transition hover:bg-teal-50">
+                    <svg class="mb-3 h-5 w-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h16.9a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                    <h4 class="text-[0.76rem] font-medium uppercase tracking-wider text-teal-900">Gestão de Pendências</h4>
+                    <p class="mt-2 text-sm leading-relaxed text-muted">Triagem e tratamento de amostras com pendências operacionais (evento 120), identificando não conformidades do fluxo pré-analítico e apoiando a correção.</p>
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </li>
+
+          <!-- Jovem Aprendiz -->
+          <li class="relative reveal reveal-1">
+            <span class="absolute -left-[2.55rem] top-7 h-3 w-3 rounded-full border-2 border-cream bg-sand md:-left-[4.05rem]"></span>
+            <article class="card overflow-hidden">
+              <header class="flex flex-col gap-5 border-b border-teal-900/10 px-6 py-7 md:flex-row md:items-start md:justify-between md:px-9">
+                <div>
+                  <p class="text-[0.7rem] uppercase tracking-[0.14em] text-teal-500">Lab-to-Lab Pardini · Grupo Fleury</p>
+                  <h3 class="mt-2 font-serif text-3xl font-light leading-tight text-teal-900 md:text-4xl">Jovem Aprendiz <span class="text-teal-900/50">— Programa CIEE</span></h3>
+                  <p class="mt-2 text-sm text-muted">São Paulo, SP · 2025 – 2026</p>
+                </div>
+                <span class="inline-flex w-fit items-center border border-teal-900/20 px-3 py-1.5 text-[0.7rem] uppercase tracking-[0.14em] text-teal-900/60">Concluído</span>
+              </header>
+              <div class="px-6 py-8 md:px-9">
+                <p class="mb-8 max-w-2xl font-light leading-relaxed text-muted">
+                  Primeira experiência em medicina diagnóstica, com suporte às rotinas pré-analíticas e à gestão de qualidade laboratorial — vivência que resultou na efetivação como Auxiliar de Produção Laboratorial.
+                </p>
+                <ul class="grid grid-cols-1 gap-px overflow-hidden border border-teal-900/10 bg-teal-900/10 lg:grid-cols-3">
+                  <li class="bg-paper p-5 transition hover:bg-teal-50">
+                    <svg class="mb-3 h-5 w-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                    <h4 class="text-[0.76rem] font-medium uppercase tracking-wider text-teal-900">Controle de Qualidade de Insumos</h4>
+                    <p class="mt-2 text-sm leading-relaxed text-muted">Gestão da guarda de materiais, verificação de lotes e monitoramento de prazos de validade em planilhas de controle, reduzindo riscos operacionais.</p>
+                  </li>
+                  <li class="bg-paper p-5 transition hover:bg-teal-50">
+                    <svg class="mb-3 h-5 w-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    <h4 class="text-[0.76rem] font-medium uppercase tracking-wider text-teal-900">Apoio Operacional à CDA</h4>
+                    <p class="mt-2 text-sm leading-relaxed text-muted">Triagem e etiquetagem das bags de exames, assegurando rastreabilidade e agilidade do fluxo analítico.</p>
+                  </li>
+                  <li class="bg-paper p-5 transition hover:bg-teal-50">
+                    <svg class="mb-3 h-5 w-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                    <h4 class="text-[0.76rem] font-medium uppercase tracking-wider text-teal-900">Padronização do Laboratório</h4>
+                    <p class="mt-2 text-sm leading-relaxed text-muted">Organização do ambiente laboratorial, cumprimento das normas de segurança e suporte à equipe técnica.</p>
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ─── FORMAÇÃO ───────────────────────────────────── -->
+    <section id="formacao" class="bg-paper py-24 md:py-32">
+      <div class="mx-auto max-w-6xl px-5 md:px-8">
+        <div class="mb-14 flex items-end gap-5 reveal">
+          <span class="eyebrow">03</span>
+          <h2 class="section-title">Formação</h2>
+          <span class="mb-3 hidden h-px flex-1 bg-teal-900/15 sm:block"></span>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-[1.5fr_1fr]">
+          <!-- FAM -->
+          <article class="card grid grid-cols-1 overflow-hidden reveal md:grid-cols-[11rem_1fr]">
+            <div class="flex flex-row items-center justify-between bg-teal-900 p-7 text-cream md:flex-col md:items-start md:justify-between">
+              <div>
+                <p class="text-[0.68rem] uppercase tracking-[0.14em] text-cream/50">Período</p>
+                <p class="mt-2 font-serif text-4xl font-light leading-none">2026<br/><span class="text-teal-300">2028</span></p>
+                <p class="mt-2 text-[0.7rem] text-cream/50">fev/2026 – nov/2028</p>
+              </div>
+              <span class="inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.14em] text-teal-300"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-teal-300"></span>Em curso</span>
+            </div>
+            <div class="p-7 md:p-9">
+              <p class="text-[0.7rem] uppercase tracking-[0.14em] text-teal-500">Centro Universitário FAM · São Paulo</p>
+              <h3 class="mt-2 font-serif text-4xl font-light leading-tight text-teal-900">Bacharelado em<br/>Biomedicina</h3>
+              <p class="mt-4 max-w-lg text-sm font-light leading-relaxed text-muted">Formação voltada ao diagnóstico e à pesquisa, unindo teoria e prática laboratorial.</p>
+              <div class="mt-6 flex flex-wrap gap-2">
+                <span class="tag">Bioquímica</span>
+                <span class="tag">Biologia Celular e Molecular</span>
+                <span class="tag">Genética</span>
+                <span class="tag">Microbiologia</span>
+                <span class="tag">Análises Clínicas</span>
+                <span class="tag">Biossegurança</span>
+                <span class="tag">Bioética</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Anhembi -->
+          <article class="card flex flex-col justify-between p-7 reveal reveal-1 md:p-9">
+            <div>
+              <p class="text-[0.7rem] uppercase tracking-[0.14em] text-teal-500">Universidade Anhembi Morumbi · São Paulo</p>
+              <h3 class="mt-2 font-serif text-3xl font-light leading-tight text-teal-900">Bacharelado em Biomedicina</h3>
+              <p class="mt-3 text-sm text-muted">fev/2025 – dez/2025</p>
+            </div>
+            <p class="mt-6 border-t border-teal-900/10 pt-5 text-sm font-light leading-relaxed text-muted">Início do curso, com transferência para o Centro Universitário FAM em 2026.</p>
+          </article>
+        </div>
+
+        <!-- Cursos -->
+        <div class="mt-16 reveal">
+          <p class="eyebrow mb-5">Cursos &amp; Certificações</p>
+          <ul class="grid grid-cols-1 gap-px overflow-hidden border border-teal-900/10 bg-teal-900/10 md:grid-cols-3">
+            <li class="bg-cream p-7 transition hover:bg-cream-dark">
+              <p class="text-[0.68rem] uppercase tracking-[0.14em] text-teal-500">Fundação Bradesco</p>
+              <h4 class="mt-2 font-serif text-2xl font-medium text-teal-900">Desenvolvimento Profissional</h4>
+              <p class="mt-2 text-sm leading-relaxed text-muted">Capacitação em competências profissionais e comportamentais para o mercado de trabalho.</p>
+            </li>
+            <li class="bg-cream p-7 transition hover:bg-cream-dark">
+              <p class="text-[0.68rem] uppercase tracking-[0.14em] text-teal-500">CIEE</p>
+              <h4 class="mt-2 font-serif text-2xl font-medium text-teal-900">Programa Jovem Aprendiz</h4>
+              <p class="mt-2 text-sm leading-relaxed text-muted">Capacitação teórica do Centro de Integração Empresa-Escola, complementar à atuação prática no Grupo Fleury.</p>
+            </li>
+            <li class="bg-cream p-7 transition hover:bg-cream-dark">
+              <p class="text-[0.68rem] uppercase tracking-[0.14em] text-teal-500">UNIFESP</p>
+              <h4 class="mt-2 font-serif text-2xl font-medium text-teal-900">DNA Day</h4>
+              <p class="mt-2 text-sm leading-relaxed text-muted">Evento sobre genética, biologia molecular e suas aplicações em saúde.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── COMPETÊNCIAS ───────────────────────────────── -->
+    <section id="competencias" class="bg-cream py-24 md:py-32">
+      <div class="mx-auto max-w-6xl px-5 md:px-8">
+        <div class="mb-14 flex items-end gap-5 reveal">
+          <span class="eyebrow">04</span>
+          <h2 class="section-title">Competências</h2>
+          <span class="mb-3 hidden h-px flex-1 bg-teal-900/15 sm:block"></span>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <article class="card p-7 reveal">
+            <div class="mb-5 flex items-center gap-3">
+              <span class="flex h-9 w-9 items-center justify-center bg-teal-900/5 text-teal-900"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6M10 3v6.5L4.5 19a1.5 1.5 0 001.3 2.2h12.4a1.5 1.5 0 001.3-2.2L14 9.5V3"/><path d="M7.5 15h9"/></svg></span>
+              <h3 class="font-serif text-2xl font-medium text-teal-900">Rotina Pré-analítica &amp; Analítica</h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="tag">Central de Distribuição de Amostras (CDA)</span>
+              <span class="tag">Triagem e etiquetagem</span>
+              <span class="tag">Rastreabilidade de amostras</span>
+              <span class="tag">Fluxo pré-analítico</span>
+            </div>
+          </article>
+
+          <article class="card p-7 reveal reveal-1">
+            <div class="mb-5 flex items-center gap-3">
+              <span class="flex h-9 w-9 items-center justify-center bg-teal-900/5 text-teal-900"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.3 7L12 12l8.7-5M12 22V12"/></svg></span>
+              <h3 class="font-serif text-2xl font-medium text-teal-900">Logística &amp; Automação</h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="tag">Recebimento de rotas e malotes</span>
+              <span class="tag">Envio interunidades</span>
+              <span class="tag">Linhas automatizadas (GLP)</span>
+              <span class="tag">Soroteca · arquivamento e descarte</span>
+            </div>
+          </article>
+
+          <article class="card p-7 reveal reveal-2">
+            <div class="mb-5 flex items-center gap-3">
+              <span class="flex h-9 w-9 items-center justify-center bg-teal-900/5 text-teal-900"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+              <h3 class="font-serif text-2xl font-medium text-teal-900">Qualidade &amp; Biossegurança</h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="tag">Controle de insumos, lotes e validade</span>
+              <span class="tag">Boas práticas de laboratório</span>
+              <span class="tag">Procedimentos operacionais padrão (POP)</span>
+              <span class="tag">Gestão de pendências (evento 120)</span>
+            </div>
+          </article>
+
+          <article class="card p-7 reveal reveal-3">
+            <div class="mb-5 flex items-center gap-3">
+              <span class="flex h-9 w-9 items-center justify-center bg-teal-900/5 text-teal-900"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+              <h3 class="font-serif text-2xl font-medium text-teal-900">Ferramentas &amp; Fundamentos</h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="tag">Pacote Office</span>
+              <span class="tag">Planilhas de controle</span>
+              <span class="tag">Sistemas laboratoriais</span>
+              <span class="tag">Bioética</span>
+              <span class="tag">Biologia molecular</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr]">
+          <!-- soft skills -->
+          <article class="bg-teal-900 p-7 text-cream reveal md:p-9">
+            <p class="text-[0.7rem] uppercase tracking-[0.14em] text-sand">Habilidades comportamentais</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span class="tag-dark">Atenção aos detalhes</span>
+              <span class="tag-dark">Organização</span>
+              <span class="tag-dark">Responsabilidade</span>
+              <span class="tag-dark">Comunicação</span>
+              <span class="tag-dark">Trabalho em equipe</span>
+              <span class="tag-dark">Proatividade</span>
+              <span class="tag-dark">Habilidades analíticas</span>
+              <span class="tag-dark">Aprendizado contínuo</span>
+            </div>
+          </article>
+
+          <!-- languages -->
+          <article class="card p-7 reveal reveal-1 md:p-9">
+            <p class="eyebrow">Idiomas</p>
+            <ul class="mt-5 space-y-5">
+              <li>
+                <div class="flex items-baseline justify-between">
+                  <span class="font-serif text-2xl font-medium text-teal-900">Português</span>
+                  <span class="text-[0.7rem] uppercase tracking-[0.14em] text-muted">Nativo</span>
+                </div>
+                <div class="mt-2 h-px bg-teal-900/10"><div class="lang-bar h-px w-0 bg-teal-500 transition-all duration-[1400ms] ease-out" data-w="100%"></div></div>
+              </li>
+              <li>
+                <div class="flex items-baseline justify-between">
+                  <span class="font-serif text-2xl font-medium text-teal-900">Inglês</span>
+                  <span class="text-[0.7rem] uppercase tracking-[0.14em] text-muted">Básico · em evolução</span>
+                </div>
+                <div class="mt-2 h-px bg-teal-900/10"><div class="lang-bar h-px w-0 bg-teal-500 transition-all duration-[1400ms] ease-out" data-w="35%"></div></div>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── CONTATO ────────────────────────────────────── -->
+    <section id="contato" class="relative overflow-hidden bg-teal-900 py-24 text-cream md:py-32">
+      <div aria-hidden="true" class="pointer-events-none absolute -right-32 -top-32 h-[30rem] w-[30rem] animate-drift rounded-full border border-cream/10"></div>
+      <div aria-hidden="true" class="pointer-events-none absolute -bottom-40 -left-20 h-[26rem] w-[26rem] animate-drift rounded-full bg-teal-500/10 [animation-delay:-7s]"></div>
+
+      <div class="relative mx-auto grid max-w-6xl grid-cols-1 gap-14 px-5 md:px-8 lg:grid-cols-2 lg:gap-20">
         <div class="reveal">
-          <div class="section-eyebrow" style="color:var(--sand);margin-bottom:1.2rem;">05 — Contato</div>
-          <h2 class="contact-heading">Vamos<br/><em>conversar?</em></h2>
-          <p class="contact-sub">
+          <p class="text-[0.7rem] uppercase tracking-widest2 text-sand">05 — Contato</p>
+          <h2 class="mt-5 font-serif text-5xl font-light leading-[0.95] md:text-7xl">Vamos<br/><em class="italic text-teal-300">conversar?</em></h2>
+          <p class="mt-7 max-w-md font-light leading-relaxed text-cream/70">
             Estou aberta a oportunidades em rotina laboratorial, estágio, iniciação científica e projetos em Biomedicina, epidemiologia e saúde pública. Entre em contato!
           </p>
         </div>
-        <div class="contact-links reveal reveal-delay-1">
-          <a class="contact-link" href="mailto:gabftorresani@gmail.com">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            gabftorresani@gmail.com
-          </a>
-          <a class="contact-link" href="tel:+5511972041415">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.91a16 16 0 006.16 6.16l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            (11) 97204-1415
-          </a>
-          <a class="contact-link" href="https://www.linkedin.com/in/gabriellatorresani/" target="_blank" rel="noopener">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            linkedin.com/in/gabriellatorresani
-          </a>
-          <div class="contact-link" style="cursor:default;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            São Paulo, SP
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <footer>© 2026 Gabriella Fernandes Torresani · Biomedicina</footer>
+        <ul class="flex flex-col justify-center gap-3 reveal reveal-1">
+          <li>
+            <a class="group flex items-center justify-between border border-cream/15 px-6 py-5 transition hover:border-teal-300 hover:bg-cream/5" href="mailto:gabftorresani@gmail.com">
+              <span class="flex items-center gap-4"><svg class="h-5 w-5 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>gabftorresani@gmail.com</span>
+              <svg class="h-4 w-4 text-cream/40 transition group-hover:translate-x-1 group-hover:text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </li>
+          <li>
+            <a class="group flex items-center justify-between border border-cream/15 px-6 py-5 transition hover:border-teal-300 hover:bg-cream/5" href="tel:+5511972041415">
+              <span class="flex items-center gap-4"><svg class="h-5 w-5 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012 4.2 2 2 0 014 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8 9.9a16 16 0 006.2 6.2l1.3-1.3a2 2 0 012.1-.5c.9.3 1.9.6 2.8.7a2 2 0 011.6 2z"/></svg>(11) 97204-1415</span>
+              <svg class="h-4 w-4 text-cream/40 transition group-hover:translate-x-1 group-hover:text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </li>
+          <li>
+            <a class="group flex items-center justify-between border border-cream/15 px-6 py-5 transition hover:border-teal-300 hover:bg-cream/5" href="https://www.linkedin.com/in/gabriellatorresani/" target="_blank" rel="noopener">
+              <span class="flex items-center gap-4"><svg class="h-5 w-5 text-teal-300" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>linkedin.com/in/gabriellatorresani</span>
+              <svg class="h-4 w-4 text-cream/40 transition group-hover:translate-x-1 group-hover:text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M8 7h9v9"/></svg>
+            </a>
+          </li>
+          <li class="flex items-center gap-4 border border-cream/10 px-6 py-5 text-cream/70">
+            <svg class="h-5 w-5 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>São Paulo, SP
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-cream/10 bg-teal-950 px-5 py-7 text-center text-[0.72rem] uppercase tracking-[0.14em] text-cream/40">
+    © <span id="year">2026</span> Gabriella Fernandes Torresani · Biomedicina
+  </footer>
 
   <script>
+    // Mobile menu
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const toggleMenu = (open) => {
+      const isOpen = open ?? mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden', !isOpen);
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+      menuIcon.setAttribute('d', isOpen ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16');
+    };
+    menuBtn.addEventListener('click', () => toggleMenu());
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
+    const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-visible');
+        e.target.querySelectorAll('.lang-bar').forEach(b => { b.style.width = b.dataset.w; });
+        io.unobserve(e.target);
       });
-    }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(el => observer.observe(el));
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => io.observe(el));
+    setTimeout(() => reveals.forEach(el => {
+      el.classList.add('is-visible');
+      el.querySelectorAll('.lang-bar').forEach(b => { b.style.width = b.dataset.w; });
+    }), 2000);
 
-    // Fallback: show everything after 1.5s in case observer doesn't fire
-    setTimeout(() => {
-      reveals.forEach(el => el.classList.add('visible'));
-    }, 1500);
+    // Active nav link
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const navLinks = [...document.querySelectorAll('#nav-links .nav-link')];
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        navLinks.forEach(l => l.classList.toggle('is-active', l.getAttribute('href') === '#' + e.target.id));
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(s => spy.observe(s));
+
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
-
 </body>
 </html>

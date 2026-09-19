@@ -549,6 +549,67 @@
       letter-spacing: .04em;
     }
 
+    .exp-stack { display: flex; flex-direction: column; gap: 2rem; }
+    .exp-period {
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,.55);
+      margin-top: .5rem;
+    }
+    .exp-badge.done {
+      background: rgba(245,240,232,.08);
+      border-color: rgba(245,240,232,.2);
+      color: rgba(245,240,232,.65);
+    }
+
+    /* ─── COURSES ───────────────────────────────────── */
+    .courses-title {
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin: 3rem 0 1.2rem;
+    }
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(13,79,74,.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .course-item {
+      background: var(--cream);
+      padding: 1.6rem 1.5rem;
+      transition: background .25s;
+    }
+    .course-item:hover { background: var(--cream-dark); }
+    .course-org {
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: .5rem;
+    }
+    .course-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--teal);
+      margin-bottom: .5rem;
+    }
+    .course-desc { font-size: .82rem; line-height: 1.6; color: var(--text-muted); }
+
+    .soft-skills { margin-top: 2.5rem; }
+    .soft-skills-title {
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 1rem;
+    }
+
     /* ─── SKILLS ────────────────────────────────────── */
     #competencias { background: var(--cream); }
 
@@ -771,6 +832,8 @@
       .about-grid,
       .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
       .exp-activities { grid-template-columns: 1fr; }
+      .courses-grid { grid-template-columns: 1fr; }
+      .exp-card-header { flex-direction: column; }
       .edu-card { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: repeat(2, 1fr); }
       .lang-section { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
@@ -799,13 +862,13 @@
       <div class="bio-circle"></div>
       <div class="bio-circle"></div>
       <div class="hero-left-content">
-        <span class="hero-tag">Biomedicina · Ciência · Saúde</span>
+        <span class="hero-tag">Biomedicina · Medicina Diagnóstica · Saúde</span>
         <h1 class="hero-name">
           Gabriella<br/>
           <em>Torresani</em>
         </h1>
         <p class="hero-subtitle">
-          Estudante de Biomedicina apaixonada por ciência e pesquisa — construindo uma base sólida em rotina laboratorial, epidemiologia e estética clínica.
+          Auxiliar de Produção Laboratorial no Grupo Fleury e estudante de Biomedicina — atuando na Central de Distribuição de Amostras com foco em rastreabilidade, controle de qualidade e biossegurança.
         </p>
         <a href="#sobre" class="hero-cta">
           Explorar portfólio
@@ -821,16 +884,16 @@
           <div class="stat-label">Início Graduação</div>
         </div>
         <div class="stat-box">
-          <div class="stat-number">1</div>
-          <div class="stat-label">Exp. Laboratorial</div>
+          <div class="stat-number">2026</div>
+          <div class="stat-label">Efetivação Fleury</div>
         </div>
         <div class="stat-box">
-          <div class="stat-number"></div>
-          <div class="stat-label"></div>
+          <div class="stat-number">1+</div>
+          <div class="stat-label">Ano de Laboratório</div>
         </div>
         <div class="stat-box">
-          <div class="stat-number"></div>
-          <div class="stat-label"></div>
+          <div class="stat-number">3</div>
+          <div class="stat-label">Cursos &amp; Eventos</div>
         </div>
       </div>
     </div>
@@ -848,13 +911,13 @@
       <div class="about-grid">
         <div class="about-text reveal">
           <p>
-            Sou <strong>Gabriella Fernandes Torresani</strong>, estudante de Biomedicina pela Universidade Anhembi Morumbi. Minha trajetória é movida pela <strong>curiosidade científica</strong> e pela vontade de contribuir com a saúde humana de forma significativa.
+            Sou <strong>Gabriella Fernandes Torresani</strong>, estudante de Biomedicina pela Universidade Anhembi Morumbi, apaixonada por ciência e pesquisa em saúde. Minha trajetória é movida pela <strong>curiosidade científica</strong> e pela vontade de contribuir com a saúde humana de forma significativa.
           </p>
           <p>
-            Atuo como <strong>Jovem Aprendiz no Lab-to-Lab Pardini / Grupo Fleury</strong>, onde desenvolvo experiência prática em rotinas pré-analíticas, controle de qualidade e gestão laboratorial — pilares essenciais da minha formação profissional.
+            Atuo como <strong>Auxiliar de Produção Laboratorial no Lab-to-Lab Pardini / Grupo Fleury</strong>, efetivada após um ano como Jovem Aprendiz. Na Central de Distribuição de Amostras (CDA), trabalho com triagem, recebimento logístico de rotas e malotes, envio interunidades, apoio à automação (linhas GLP), soroteca e tratamento de pendências operacionais.
           </p>
           <p>
-            Acredito que a ciência e a prática laboratorial são ferramentas transformadoras. Busco continuamente aprender, colaborar e crescer em ambientes que valorizem a <strong>precisão, a responsabilidade e a inovação</strong>.
+            Atuo na medicina diagnóstica com responsabilidade e atenção aos detalhes, priorizando <strong>rastreabilidade, controle de qualidade, biossegurança</strong> e a integridade do fluxo pré-analítico e analítico — e mantenho o interesse aberto para pesquisa acadêmica, epidemiologia e saúde pública.
           </p>
           <blockquote class="about-highlight">
             "Apaixonada por ciência, comprometida com a saúde."
@@ -867,7 +930,7 @@
             <div class="interest-pill"><span class="dot"></span> Rotina Laboratorial</div>
             <div class="interest-pill"><span class="dot"></span> Pesquisa Acadêmica</div>
             <div class="interest-pill"><span class="dot"></span> Epidemiologia</div>
-            <div class="interest-pill"><span class="dot"></span> Estética Clínica</div>
+            <div class="interest-pill"><span class="dot"></span> Saúde Pública</div>
           </div>
           <div class="contact-mini">
             <p class="contact-mini-title">Contato rápido</p>
@@ -883,6 +946,10 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               São Paulo, SP
             </div>
+            <a class="contact-item" href="https://www.linkedin.com/in/gabriellatorresani/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              linkedin.com/in/gabriellatorresani
+            </a>
           </div>
         </div>
       </div>
@@ -898,42 +965,107 @@
         <div class="section-line"></div>
       </div>
 
-      <div class="exp-card reveal">
-        <div class="exp-card-header">
-          <div>
-            <div class="exp-company">Lab-to-Lab Pardini<br/>Grupo Fleury</div>
-            <div class="exp-role">Jovem Aprendiz — Rotina Laboratorial</div>
+      <div class="exp-stack">
+
+        <div class="exp-card reveal">
+          <div class="exp-card-header">
+            <div>
+              <div class="exp-company">Lab-to-Lab Pardini<br/>Grupo Fleury</div>
+              <div class="exp-role">Auxiliar de Produção Laboratorial</div>
+              <div class="exp-period">São Paulo, SP · 2026 – Atual · Efetivada após um ano como Jovem Aprendiz</div>
+            </div>
+            <span class="exp-badge">Atual</span>
           </div>
-          <span class="exp-badge">Em andamento</span>
+          <div class="exp-card-body">
+            <p class="exp-intro">
+              Atuação na Central de Distribuição de Amostras (CDA) e apoio à automação laboratorial no maior grupo de medicina diagnóstica do Brasil, garantindo rastreabilidade, controle de qualidade e integridade do fluxo pré-analítico e analítico.
+            </p>
+            <div class="exp-activities">
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              </div>
+              <div class="activity-title">Central de Distribuição (CDA)</div>
+              <div class="activity-desc">Triagem, conferência e etiquetagem de amostras biológicas, garantindo rastreabilidade desde a entrada do material.</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              </div>
+              <div class="activity-title">Recebimento Logístico</div>
+              <div class="activity-desc">Recebimento de rotas e malotes, com conferência de volumes, condições de transporte e registro em sistema.</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              </div>
+              <div class="activity-title">Envio Interunidades</div>
+              <div class="activity-desc">Separação e organização de exames destinados ao Hermes Pardini (MG), assegurando prazos e integridade das amostras em trânsito.</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+              </div>
+              <div class="activity-title">Apoio à Automação</div>
+              <div class="activity-desc">Alimentação e acompanhamento das linhas automatizadas (GLP), contribuindo para a continuidade e produtividade do fluxo analítico.</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+              </div>
+              <div class="activity-title">Soroteca</div>
+              <div class="activity-desc">Arquivamento, controle e descarte controlado de amostras conforme normas de biossegurança e procedimentos operacionais padrão (POP).</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+              </div>
+              <div class="activity-title">Gestão de Pendências</div>
+              <div class="activity-desc">Triagem e tratamento de amostras com pendências operacionais (evento 120), identificando não conformidades do fluxo pré-analítico e apoiando a correção.</div>
+            </div>
+            </div>
+          </div>
         </div>
-        <div class="exp-card-body">
-          <p class="exp-intro">
-            Atuação no suporte às rotinas pré-analíticas e de gestão de qualidade laboratorial no maior grupo de medicina diagnóstica do Brasil, desenvolvendo vivência prática essencial para a formação em Biomedicina.
-          </p>
-          <div class="exp-activities">
+
+        <div class="exp-card reveal reveal-delay-1">
+          <div class="exp-card-header">
+            <div>
+              <div class="exp-company">Lab-to-Lab Pardini<br/>Grupo Fleury</div>
+              <div class="exp-role">Jovem Aprendiz — Programa CIEE</div>
+              <div class="exp-period">São Paulo, SP · 2025 – 2026</div>
+            </div>
+            <span class="exp-badge done">Concluído</span>
+          </div>
+          <div class="exp-card-body">
+            <p class="exp-intro">
+              Primeira experiência em medicina diagnóstica, com suporte às rotinas pré-analíticas e à gestão de qualidade laboratorial — vivência que resultou na efetivação como Auxiliar de Produção Laboratorial.
+            </p>
+            <div class="exp-activities">
             <div class="activity-item">
               <div class="activity-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
               </div>
               <div class="activity-title">Controle de Qualidade</div>
-              <div class="activity-desc">Gestão de insumos, verificação rigorosa de lotes e monitoramento de prazos via planilhas de controle, mitigando riscos e garantindo a segurança dos processos.</div>
+              <div class="activity-desc">Gestão da guarda de insumos, verificação rigorosa de lotes e monitoramento de prazos de validade em planilhas de controle, reduzindo riscos operacionais.</div>
             </div>
             <div class="activity-item">
               <div class="activity-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
               </div>
               <div class="activity-title">Apoio à CDA</div>
-              <div class="activity-desc">Suporte direto na Central de Distribuição de Amostras, realizando triagem e etiquetação precisa das bags de exames para assegurar rastreabilidade e agilidade do fluxo analítico.</div>
+              <div class="activity-desc">Suporte direto na Central de Distribuição de Amostras, com triagem e etiquetagem precisa das bags de exames para assegurar rastreabilidade e agilidade do fluxo analítico.</div>
             </div>
             <div class="activity-item">
               <div class="activity-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
               </div>
               <div class="activity-title">Padronização do Lab</div>
-              <div class="activity-desc">Manutenção da organização do ambiente laboratorial, cumprindo normas de segurança e contribuindo para a eficiência e excelência da equipe técnica.</div>
+              <div class="activity-desc">Manutenção da organização do ambiente laboratorial, cumprimento das normas de segurança e suporte à equipe técnica.</div>
+            </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -968,6 +1100,27 @@
           </div>
         </div>
       </div>
+
+      <div class="reveal reveal-delay-1">
+        <p class="courses-title">Cursos &amp; Certificações</p>
+        <div class="courses-grid">
+          <div class="course-item">
+            <div class="course-org">Fundação Bradesco</div>
+            <div class="course-name">Desenvolvimento Profissional</div>
+            <div class="course-desc">Capacitação em competências profissionais e comportamentais para o mercado de trabalho.</div>
+          </div>
+          <div class="course-item">
+            <div class="course-org">CIEE</div>
+            <div class="course-name">Programa Jovem Aprendiz</div>
+            <div class="course-desc">Capacitação teórica do Centro de Integração Empresa-Escola, complementar à atuação prática no Grupo Fleury.</div>
+          </div>
+          <div class="course-item">
+            <div class="course-org">UNIFESP</div>
+            <div class="course-name">DNA Day</div>
+            <div class="course-desc">Evento sobre genética, biologia molecular e suas aplicações em saúde.</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -982,44 +1135,58 @@
 
       <div class="skills-grid reveal">
         <div class="skill-card">
-          <div class="skill-icon">💬</div>
-          <div class="skill-name">Comunicação</div>
-          <div class="skill-desc">Clareza e objetividade na transmissão de informações técnicas e interpessoais.</div>
+          <div class="skill-icon">🧪</div>
+          <div class="skill-name">Rotina Pré-analítica e Analítica</div>
+          <div class="skill-desc">Central de Distribuição de Amostras (CDA): triagem, etiquetagem e rastreabilidade de amostras biológicas.</div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">📋</div>
-          <div class="skill-name">Organização</div>
-          <div class="skill-desc">Gestão eficiente de materiais, processos e fluxos de trabalho no ambiente laboratorial.</div>
+          <div class="skill-icon">📦</div>
+          <div class="skill-name">Logística de Amostras</div>
+          <div class="skill-desc">Recebimento de rotas e malotes, conferência de volumes e separação de exames para envio interunidades.</div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">🔬</div>
-          <div class="skill-name">Habilidades Analíticas</div>
-          <div class="skill-desc">Capacidade de interpretar dados, identificar padrões e solucionar problemas com precisão.</div>
+          <div class="skill-icon">⚙️</div>
+          <div class="skill-name">Automação Laboratorial</div>
+          <div class="skill-desc">Alimentação e acompanhamento de linhas automatizadas (GLP), apoiando a continuidade do fluxo analítico.</div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">🤝</div>
-          <div class="skill-name">Trabalho em Equipe</div>
-          <div class="skill-desc">Colaboração ativa e construtiva em ambientes multidisciplinares e técnicos.</div>
+          <div class="skill-icon">🗄️</div>
+          <div class="skill-name">Soroteca</div>
+          <div class="skill-desc">Arquivamento, controle e descarte controlado de amostras conforme normas e POPs.</div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">⚡</div>
-          <div class="skill-name">Proatividade</div>
-          <div class="skill-desc">Iniciativa para antecipar demandas e propor melhorias nos processos.</div>
+          <div class="skill-icon">✅</div>
+          <div class="skill-name">Controle de Qualidade</div>
+          <div class="skill-desc">Gestão de insumos, verificação de lotes e monitoramento de prazos de validade em planilhas de controle.</div>
         </div>
         <div class="skill-card">
           <div class="skill-icon">🛡️</div>
-          <div class="skill-name">Responsabilidade</div>
-          <div class="skill-desc">Comprometimento com a qualidade, a segurança e a ética em todas as atividades.</div>
+          <div class="skill-name">Biossegurança & POP</div>
+          <div class="skill-desc">Boas práticas de laboratório, normas de biossegurança e procedimentos operacionais padrão.</div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">⏰</div>
-          <div class="skill-name">Pontualidade</div>
-          <div class="skill-desc">Respeito aos prazos e horários, garantindo a fluidez das rotinas e processos.</div>
+          <div class="skill-icon">💻</div>
+          <div class="skill-name">Sistemas & Office</div>
+          <div class="skill-desc">Pacote Office, planilhas de controle e sistemas laboratoriais para registro e rastreabilidade.</div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">✨</div>
-          <div class="skill-name">Em crescimento</div>
-          <div class="skill-desc">Sempre em busca de novas habilidades e desafios na área da saúde e ciências biomédicas.</div>
+          <div class="skill-icon">🧬</div>
+          <div class="skill-name">Fundamentos Biomédicos</div>
+          <div class="skill-desc">Bases de bioética e biologia molecular aplicadas à prática em medicina diagnóstica.</div>
+        </div>
+      </div>
+
+      <div class="soft-skills reveal reveal-delay-1">
+        <p class="soft-skills-title">Habilidades comportamentais</p>
+        <div class="edu-tags">
+          <span class="edu-tag">Atenção aos detalhes</span>
+          <span class="edu-tag">Organização</span>
+          <span class="edu-tag">Responsabilidade</span>
+          <span class="edu-tag">Comunicação</span>
+          <span class="edu-tag">Trabalho em equipe</span>
+          <span class="edu-tag">Proatividade</span>
+          <span class="edu-tag">Pensamento analítico</span>
+          <span class="edu-tag">Aprendizado contínuo</span>
         </div>
       </div>
 
@@ -1027,6 +1194,7 @@
         <div>
           <div class="lang-label">Idiomas</div>
           <div class="lang-name">Inglês</div>
+          <div class="lang-level" style="margin-top:.6rem;">Português · Nativo</div>
         </div>
         <div class="lang-bar-wrap">
           <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -1048,7 +1216,7 @@
           <div class="section-eyebrow" style="color:var(--sand);margin-bottom:1.2rem;">05 — Contato</div>
           <h2 class="contact-heading">Vamos<br/><em>conversar?</em></h2>
           <p class="contact-sub">
-            Estou aberta a oportunidades de estágio, iniciação científica e projetos na área de Biomedicina. Entre em contato!
+            Estou aberta a oportunidades em rotina laboratorial, estágio, iniciação científica e projetos em Biomedicina, epidemiologia e saúde pública. Entre em contato!
           </p>
         </div>
         <div class="contact-links reveal reveal-delay-1">
@@ -1060,6 +1228,10 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.91a16 16 0 006.16 6.16l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
             (11) 97204-1415
           </a>
+          <a class="contact-link" href="https://www.linkedin.com/in/gabriellatorresani/" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            linkedin.com/in/gabriellatorresani
+          </a>
           <div class="contact-link" style="cursor:default;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             São Paulo, SP
@@ -1069,7 +1241,7 @@
     </div>
   </section>
 
-  <footer>© 2025 Gabriella Fernandes Torresani · Biomedicina</footer>
+  <footer>© 2026 Gabriella Fernandes Torresani · Biomedicina</footer>
 
   <script>
     // Scroll reveal

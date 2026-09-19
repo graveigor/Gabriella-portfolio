@@ -17,11 +17,11 @@ README.md                  → este arquivo
 
 | # | Seção | Conteúdo |
 |---|-------|----------|
-| 01 | **Sobre** | Apresentação pessoal, áreas de interesse e contato rápido |
-| 02 | **Experiência** | Lab-to-Lab Pardini / Grupo Fleury — Jovem Aprendiz |
-| 03 | **Formação** | Bacharelado em Biomedicina — Anhembi Morumbi (2025–2028) |
-| 04 | **Competências** | Grid de habilidades + barra de idioma animada |
-| 05 | **Contato** | Links diretos para e-mail e telefone |
+| 01 | **Sobre** | Apresentação pessoal, áreas de interesse e contato rápido (e-mail, telefone, LinkedIn) |
+| 02 | **Experiência** | Lab-to-Lab Pardini / Grupo Fleury — Auxiliar de Produção Laboratorial (2026–atual) e Jovem Aprendiz / CIEE (2025–2026) |
+| 03 | **Formação** | Bacharelado em Biomedicina — Anhembi Morumbi (2025–2028) + cursos e certificações (Fundação Bradesco, CIEE, DNA Day UNIFESP) |
+| 04 | **Competências** | Grid de competências técnicas, habilidades comportamentais e barra de idioma animada |
+| 05 | **Contato** | Links diretos para e-mail, telefone e LinkedIn |
 
 ---
 
